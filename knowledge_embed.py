@@ -2,6 +2,8 @@ import json
 import chromadb
 import hashlib
 import uuid
+import argparse
+from pathlib import Path
 from sentence_transformers import SentenceTransformer
 
 # ==============================
@@ -12,24 +14,42 @@ embedder = SentenceTransformer('BAAI/bge-m3')
 #  WAJIB pakai ini
 client = chromadb.PersistentClient(path="./chroma_db")
 
-#  HAPUS COLLECTION LAMA (OPTIONAL)
-try:
-    client.delete_collection("docs")
-    print("Collection lama dihapus")
-except:
-    pass
+parser = argparse.ArgumentParser(description="Embed chunk JSON files into Chroma DB")
+parser.add_argument("--files", nargs="*", help="Specific JSON files to embed (paths)")
+parser.add_argument("--dir", help="Directory containing JSON chunk files to embed")
+parser.add_argument("--reset", action="store_true", help="Delete existing 'docs' collection before inserting")
+args = parser.parse_args()
+
+#  HAPUS COLLECTION LAMA jika diminta via --reset
+if args.reset:
+    try:
+        client.delete_collection("docs")
+        print("Collection lama dihapus")
+    except Exception:
+        pass
 
 collection = client.get_or_create_collection(name="docs")
 
 # ==============================
 # FILE JSON
 # ==============================
-files = [
-    "hasil_chunking/kia_chunks_refined.json",
-    "hasil_chunking/gizi_chunks.json",
-    "hasil_chunking/antenatal_chunks_refined.json",
-    "hasil_chunking/imunisasi_chunks_refined.json"
+default_files = [
+    "hasil_chunking/buku_kia_2024_1_chunks_balanced.json",
+    "hasil_chunking/buku_digital_gizi_pada_ibu_hamil_chunks_balanced.json",
+    "hasil_chunking/pedoman_pelayanan_antenatal_terpadu_edisi_ketiga_2020_chunks_balanced.json",
+    "hasil_chunking/pdf_link_buku_pedoman_imunisasi_2024_chunks_balanced.json",
+    "hasil_chunking/pgs_ibu_hamil_dan_ibu_menyusui_merge_1_chunks_balanced.json"
 ]
+
+# Resolve input files: --files, or --dir (all .json), or defaults
+files = []
+if args.files:
+    files = args.files
+elif args.dir:
+    p = Path(args.dir)
+    files = [str(x) for x in p.glob('*.json')]
+else:
+    files = default_files
 
 # ==============================
 # LOOP FILE
@@ -78,11 +98,11 @@ for file_path in files:
             # TEXT EMBEDDING
             # ==============================
             text = f"""
-{item.get('title', '')}
-Kategori: {item.get('category', '')}
-Sub: {item.get('sub_category', '')}
-Isi: {item.get('content', '')}
-"""
+                {item.get('title', '')}
+                Kategori: {item.get('category', '')}
+                Sub: {item.get('sub_category', '')}
+                Isi: {item.get('content', '')}
+                """
 
             emb = embedder.encode(text).tolist()
 
