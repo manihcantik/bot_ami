@@ -1,9 +1,3 @@
-"""
-Chatbot Kesehatan Ibu dan Anak - Minimal Version
-Arsitektur: RAG dengan ChromaDB + BGE-M3 + LM Studio
-Fitur Inti: Retrieval, Generation, Conversation Memory, Logging
-"""
-
 # ==============================
 # 1. IMPORTS
 # ==============================
