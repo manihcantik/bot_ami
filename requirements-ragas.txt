@@ -1,0 +1,7 @@
+ragas==0.4.3
+datasets
+pandas
+openai
+sentence-transformers
+chromadb
+requests

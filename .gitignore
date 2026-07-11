@@ -1,0 +1,21 @@
+# Virtual Environment
+.venv/
+
+# Python
+__pycache__/
+*.pyc
+
+# Environment
+.env
+
+# ChromaDB
+chroma_db/
+
+# VS Code
+.vscode/
+
+# Log
+*.log
+
+# Model embedding
+bge-m3/

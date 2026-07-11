@@ -1,0 +1,122 @@
+﻿[
+  {
+    "question": "Berapa kali minimal ibu hamil harus periksa kehamilan?",
+    "ground_truth": "Periksa paling sedikit 6 kali oleh dokter atau bidan."
+  },
+  {
+    "question": "Berapa kisaran kenaikan berat badan ibu selama masa kehamilan 9 bulan?",
+    "ground_truth": "Ibu akan naik berat badannya sebanyak 5 – 18 kg sesuai dengan status gizi ibu sebelum hamil."
+  },
+  {
+    "question": "Apa yang dimaksud dengan 1000 Hari Pertama Kehidupan (1000 HPK)?",
+    "ground_truth": "Seribu hari pertama kehidupan (1000 HPK) adalah masa paling penting dalam pertumbuhan dan perkembangan anak. Masa ini terdiri dari 270 hari selama bayi berada dalam kandungan ibu, dan 730 hari atau dua tahun pertama kehidupan anak setelah dilahirkan."
+  },
+  {
+    "question": "Berapa persen perkembangan otak anak saat lahir?",
+    "ground_truth": "25% Saat Lahir."
+  },
+  {
+    "question": "Apa yang harus dilakukan jika ibu terlambat datang bulan 1 minggu?",
+    "ground_truth": "Segera periksa ke fasilitas pelayanan kesehatan, jika terlambat datang bulan 1 minggu."
+  },
+  {
+    "question": "Berapa kali minimal ibu hamil harus periksa kehamilan ke dokter pada trimester 1?",
+    "ground_truth": "Periksa kehamilan ke dokter paling sedikit satu kali, termasuk USG dan laboratorium lengkap."
+  },
+  {
+    "question": "Sebaiknya kapan waktu minum Tablet Tambah Darah (TTD)/MMS?",
+    "ground_truth": "Sebaiknya pada malam hari sebelum tidur untuk mengurangi rasa mual."
+  },
+  {
+    "question": "Apa yang harus dilakukan jika ibu hamil mengalami tanda bahaya pada masa kehamilan?",
+    "ground_truth": "Jika mengalami tanda bahaya pada masa kehamilan, segera bawa ibu hamil periksa ke Puskesmas/Rumah Sakit."
+  },
+  {
+    "question": "Berapa lama waktu tidur malam dan tidur siang yang disarankan bagi ibu hamil?",
+    "ground_truth": "Istirahat cukup dengan tidur malam paling sedikit 6-7 jam dan tidur siang selama 1-2 jam."
+  },
+  {
+    "question": "Mengapa ibu hamil tidak boleh tidur telentang lebih dari 10 menit pada trimester 2 & 3?",
+    "ground_truth": "Untuk menghindari kekurangan oksigen pada bayi."
+  },
+  {
+    "question": "Sebutkan kondisi-kondisi mingguan yang jika dialami ibu hamil, ia harus segera periksa ke Puskesmas/Rumah Sakit.",
+    "ground_truth": "Demam lebih dari 2 hari, Pusing/sakit kepala berat, Sulit tidur/cemas berlebih, Risiko TB Batuk lebih dari 2 minggu atau kontak serumah dengan penderita TB, Gerakan bayi Tidak ada atau Kurang dari 10x dalam 12 jam setelah minggu ke-24, Nyeri perut hebat, Keluar cairan dari jalan lahir Sangat banyak atau berbau, Sakit saat kencing Atau keluar keputihan atau gatal di daerah kemaluan, Diare berulang."
+  },
+  {
+    "question": "Sebutkan gejala-gejala yang menandakan gangguan kesehatan jiwa pada ibu hamil.",
+    "ground_truth": "Ketegangan mental, berupa kecemasan dan rasa khawatir yang berlebihan. Ketegangan fisik seperti gelisah, gemetar, tidak dapat rileks, ketegangan otot, dan sakit kepala. Berdebar, berkeringat, sesak napas, kepala terasa ringan, serta keluhan tidak nyaman di perut bagian atas sekitar ulu hati. Merasa lelah berkepanjangan, tapi sulit untuk tidur. Mudah tersinggung dan marah. Mengalami perubahan hubungan dengan suami."
+  },
+  {
+    "question": "Apa yang harus dilakukan untuk menjaga kesehatan jiwa Ibu selama kehamilan?",
+    "ground_truth": "Tidur cukup. Makan makanan bergizi. Pergi ke Puskesmas atau fasilitas pelayanan kesehatan untuk melakukan pemeriksaan masalah kesehatan jiwa. Suami atau keluarga mendampingi, serta memberi perhatian dan bantuan yang dibutuhkan Ibu."
+  },
+  {
+    "question": "Apa manfaat yang bisa didapatkan ibu dengan mengikuti kelas ibu hamil?",
+    "ground_truth": "Dengan mengikuti kelas ibu hamil, ibu bisa mempersiapkan tubuh dan mental untuk kelancaran proses melahirkan. Selain itu juga mendapatkan dukungan dari ibu-ibu lain, serta memperoleh informasi tentang kehamilan, proses melahirkan, perawatan masa nifas, perawatan bayi baru lahir, kebutuhan dan pemenuhan gizi serta pelayanan kesehatan yang diterima."
+  },
+  {
+    "question": "Apa saja yang harus dilakukan ibu hamil pada usia kehamilan 4-6 bulan (Trimester 2)?",
+    "ground_truth": "Periksa kehamilan ke dokter atau bidan paling sedikit dua kali. Pantau gerak bayi. Makan dengan porsi lebih kecil tapi sering, yang terbagi dalam 3 kali makanan utama ditambah dengan 1-2 kali makanan kudapan dalam sehari (lihat tabel porsi makan dan minum Ibu Hamil di bawah). Minum Tablet Tambah Darah (TTD)/Multivitamin setiap hari selama kehamilan. Kenali dan cek tanda bahaya (lihat halaman 17). Jika mengalami tanda bahaya, segera pergi ke fasilitas pelayanan kesehatan. Mulai merencanakan proses melahirkan atau kelahiran melalui diskusi dengan tenaga kesehatan."
+  },
+  {
+    "question": "Sebutkan tanda bahaya pada Trimester 2 yang mengharuskan ibu hamil segera dibawa periksa ke Puskesmas/Rumah Sakit.",
+    "ground_truth": "Demam Tinggi. Muntah darah. Napas pendek dan jantung berdebar kencang. Nyeri perut hebat. Pandangan kabur. Perdarahan. Perdarahan atau keluar cairan dari jalan lahir yang sangat banyak atau berbau. Pusing/sakit kepala berat. Sakit saat kencing atau keluar keputihan atau gatal di daerah kemaluan."
+  },
+  {
+    "question": "Apa dampak gejolak emosi yang dialami ibu selama kehamilan terhadap ibu dan bayi?",
+    "ground_truth": "Selama kehamilan Ibu dapat mengalami berbagai gejolak emosi, seperti mudah sedih, mudah marah, stres, cemas, dan depresi. Hal ini akan mempengaruhi kesehatan fisik dan emosi ibu hamil, serta perkembangan bayi dalam kandungannya."
+  },
+  {
+    "question": "Mengapa kesehatan jiwa yang baik selama kehamilan itu penting?",
+    "ground_truth": "Kesehatan jiwa yang baik selama kehamilan adalah kunci untuk proses melahirkan yang sehat, dan awal yang baik bagi kesehatan fisik maupun mental ibu dan bayi."
+  },
+  {
+    "question": "Berapa kali suami dianjurkan mengikuti Kelas Ibu Hamil, dan kepada siapa jadwal serta tempat pelaksanaannya bisa ditanyakan?",
+    "ground_truth": "Untuk jadwal dan tempat pelaksanaan Kelas ibu hamil tanyakan pada petugas kesehatan, dan minta suami mengikuti paling sedikit 1 kali."
+  },
+  {
+    "question": "Apa yang dialami ibu pada usia kehamilan 4-6 bulan (Trimester 2), termasuk kenaikan berat badan dan gerak bayi?",
+    "ground_truth": "Gejala yang dirasakan pada awal kehamilan mulai berkurang. Kenaikan berat badan sesuai dengan status gizi ibu sebelum hamil, yaitu sekitar 4 – 8 kg. Mulai merasakan gerak bayi, seperti menendang, pada usia kehamilan 5 bulan."
+  },
+  {
+    "question": "Bagaimana perkembangan bayi pada usia kehamilan Trimester 2, dari segi panjang dan berat badan?",
+    "ground_truth": "Fungsi organ dan tubuh bayi berkembang, dimana bayi akan tumbuh mulai dari panjang 12.5 cm atau kira-kira sebesar apel sampai 34 cm dan berat sekitar 1000 gram, atau kira-kira sebesar jagung di akhir bulan ke 6."
+  },
+  {
+    "question": "Kapan sebaiknya persiapan melahirkan mulai dilakukan?",
+    "ground_truth": "Demi kelancaran proses melahirkan, persiapan harus dilakukan jauh-jauh hari, yaitu mulai trimester kedua."
+  },
+  {
+    "question": "Apa yang harus dilakukan ibu hamil pada usia kehamilan 7-9 bulan (Trimester 3)?",
+    "ground_truth": "Periksa kehamilan paling sedikit tiga kali dan salah satunya harus oleh dokter, termasuk pemeriksaan USG dan laboratorium. Makan dengan porsi lebih kecil tapi sering, yang terbagi dalam 3 kali makanan utama ditambah dengan 1-2 kali makanan kudapan dalam sehari (lihat halaman 16) sama dengan trimester 2. Minum Tablet Tambah Darah (TTD)/Multivitamin setiap hari selama kehamilan. Kenali dan cek tanda bahaya (lihat halaman 20). Jika mengalami tanda bahaya, segera pergi ke fasilitas pelayanan kesehatan. Kenali tanda awal melahirkan dan tanda bahaya pada melahirkan. Pelajari proses melahirkan. Diskusikan dengan tenaga kesehatan metode KB yang akan dipilih. Pelajari pentingnya Inisiasi Menyusu Dini (IMD) dan pemberian Air Susu Ibu (ASI). Ketahui hal-hal penting terkait perawatan bayi baru lahir."
+  },
+  {
+    "question": "Benarkah mitos bahwa minyak dan makanan pedas dapat mempercepat kelahiran?",
+    "ground_truth": "Mitos ini tidak terbukti secara ilmiah ya, Bu. Yang terpenting adalah menjaga pola makan seimbang dan memenuhi kebutuhan gizi agar ibu dan bayi tetap sehat selama proses melahirkan."
+  },
+  {
+    "question": "Sebutkan tanda bahaya pada Trimester 3 yang mengharuskan ibu hamil segera dibawa periksa ke Puskesmas/Rumah Sakit.",
+    "ground_truth": "Gerakan bayi tidak ada/kurang dari 10 kali dalam 12 jam. Ketuban pecah namun tidak ada kontraksi. Nyeri perut hebat di antara kontraksi. Perdarahan hebat. Pusing/sakit kepala berat."
+  },
+  {
+    "question": "Di fasilitas kesehatan mana proses melahirkan harus dilakukan, dan mengapa?",
+    "ground_truth": "Proses melahirkan harus dilakukan di Puskesmas, Rumah Sakit atau Klinik Bersalin, sehingga jika terjadi masalah dapat ditangani segera."
+  },
+  {
+    "question": "Apa yang dialami ibu ketika proses melahirkan dimulai?",
+    "ground_truth": "Ketika proses melahirkan dimulai, Ibu akan mengalami pembukaan jalan lahir, keluarnya lendir bercampur darah, merasakan mulas-mulas yang teratur, semakin sering dan semakin lama."
+  },
+  {
+    "question": "Mengapa kontak kulit ke kulit (Inisiasi Menyusu Dini) antara ibu dan bayi penting dilakukan segera setelah melahirkan?",
+    "ground_truth": "Kontak kulit ke kulit dengan bayi penting untuk menjaga kehangatan bayi, membangun ikatan kasih sayang antara ibu dan anak (bonding), serta awal keberhasilan menyusui, dimana bayi mendapat Air Susu Ibu pertama (Kolostrum) untuk menjaga kekebalan tubuhnya."
+  },
+  {
+    "question": "Apa saja tanda awal proses melahirkan?",
+    "ground_truth": "Perut mulas-mulas yang teratur, timbulnya semakin sering dan semakin lama. Keluar lendir bercampur darah dari jalan lahir atau keluar cairan ketuban dari jalan lahir."
+  },
+  {
+    "question": "Sebutkan manfaat Inisiasi Menyusu Dini (IMD) pada ibu dan bayi.",
+    "ground_truth": "Menciptakan rasa tenang dan nyaman pada ibu dan bayi melalui kontak kulit ke kulit. Kandungan kolostrum dalam ASI mengandung gizi dan antibodi dari ibu, sehingga bisa meningkatkan daya tahan tubuh dan ketahanan hidup bayi. Meningkatkan kesehatan sistem pencernaan bayi, sehingga mengurangi risiko diare pada bayi. Menstimulasi produksi ASI dan meningkatkan durasi menyusui. Mengurangi pendarahan karena gerakan bayi di atas perut ibu dapat membantu menstimulasi kontraksi rahim. Mempercepat proses pelepasan plasenta."
+  }
+]
