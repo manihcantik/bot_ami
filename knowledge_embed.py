@@ -6,6 +6,7 @@ import argparse
 from pathlib import Path
 from sentence_transformers import SentenceTransformer
 
+<<<<<<< HEAD
 from config import PROJECT_ROOT, SCENARIO_NAME
 
 # ==============================
@@ -14,6 +15,15 @@ from config import PROJECT_ROOT, SCENARIO_NAME
 embedder = SentenceTransformer(str(Path(__file__).resolve().parent / "bge-m3"))
 
 client = chromadb.PersistentClient(path=str(PROJECT_ROOT / "chroma_db"))
+=======
+# ==============================
+# INIT
+# ==============================
+embedder = SentenceTransformer('BAAI/bge-m3')
+
+#  WAJIB pakai ini
+client = chromadb.PersistentClient(path="./chroma_db")
+>>>>>>> 612300915689b1c75ce600abf08a68a1e197ac17
 
 parser = argparse.ArgumentParser(description="Embed chunk JSON files into Chroma DB")
 parser.add_argument("--files", nargs="*", help="Specific JSON files to embed (paths)")
@@ -34,7 +44,17 @@ collection = client.get_or_create_collection(name="docs")
 # ==============================
 # FILE JSON
 # ==============================
+<<<<<<< HEAD
 default_dir = PROJECT_ROOT / "hasil_chunking"
+=======
+default_files = [
+    "hasil_chunking/buku_kia_2024_1_chunks_balanced.json",
+    "hasil_chunking/buku_digital_gizi_pada_ibu_hamil_chunks_balanced.json",
+    "hasil_chunking/pedoman_pelayanan_antenatal_terpadu_edisi_ketiga_2020_chunks_balanced.json",
+    "hasil_chunking/pdf_link_buku_pedoman_imunisasi_2024_chunks_balanced.json",
+    "hasil_chunking/pgs_ibu_hamil_dan_ibu_menyusui_merge_1_chunks_balanced.json"
+]
+>>>>>>> 612300915689b1c75ce600abf08a68a1e197ac17
 
 # Resolve input files: --files, or --dir (all .json), or defaults
 files = []
@@ -44,9 +64,13 @@ elif args.dir:
     p = Path(args.dir)
     files = [str(x) for x in p.glob('*.json')]
 else:
+<<<<<<< HEAD
     files = [str(x) for x in sorted(default_dir.glob("*.json"))]
 
 print(f"Scenario aktif: {SCENARIO_NAME}")
+=======
+    files = default_files
+>>>>>>> 612300915689b1c75ce600abf08a68a1e197ac17
 
 # ==============================
 # LOOP FILE

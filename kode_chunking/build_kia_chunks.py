@@ -2,7 +2,10 @@ import json
 import re
 import argparse
 import logging
+<<<<<<< HEAD
 import sys
+=======
+>>>>>>> 612300915689b1c75ce600abf08a68a1e197ac17
 from pathlib import Path
 from typing import Dict, List, Tuple
 
@@ -16,6 +19,7 @@ logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+<<<<<<< HEAD
 sys.path.insert(0, str(BASE_DIR))
 
 from config import CHUNK_OVERLAP, CHUNK_SIZE, SCENARIO_NAME
@@ -24,6 +28,10 @@ SOURCE_PDF = str(BASE_DIR / "sumber_data" / "Buku_KIA_2024 (1).pdf")
 OUT_FILE = str(BASE_DIR / "hasil_chunking" / "kia_chunks.json")
 SOURCE_DIR = BASE_DIR / "sumber_data"
 OUTPUT_DIR = BASE_DIR / "hasil_chunking"
+=======
+SOURCE_PDF = str(BASE_DIR / "sumber_data" / "Buku_KIA_2024 (1).pdf")
+OUT_FILE = str(BASE_DIR / "hasil_chunking" / "kia_chunks.json")
+>>>>>>> 612300915689b1c75ce600abf08a68a1e197ac17
 
 CHUNK_PROFILES = {
     "strict": {"min_words": 200, "max_words": 500, "min_output_words": 120, "merge_under": 200, "merge_max_total": 500},
@@ -193,6 +201,7 @@ def split_special_blocks(content: str) -> List[str]:
         return [p.strip() for p in parts if len(p.split()) >= 40]
     return [content]
 
+<<<<<<< HEAD
 
 def normalize_spaces(text: str) -> str:
     text = text.replace("\r", "\n")
@@ -255,6 +264,37 @@ def chunk_text(text: str, max_chars: int = CHUNK_SIZE, overlap_chars: int = CHUN
         start = next_start
 
     return chunks
+=======
+def chunk_text(text: str, min_w=120, max_w=350, min_out=100) -> List[str]:
+    paragraphs = [p.strip() for p in re.split(r"\n{2,}", text) if p.strip()]
+    if not paragraphs: return []
+    chunks, cur, cur_w = [], [], 0
+    for p in paragraphs:
+        pw = len(p.split())
+        if pw > max_w:
+            if cur: chunks.append("\n\n".join(cur))
+            cur, cur_w = [], 0
+            sents = re.split(r"(?<=[.!?])\s+", p)
+            tmp, tmp_w = [], 0
+            for s in sents:
+                sw = len(s.split())
+                if tmp_w + sw > max_w and tmp_w >= min_w:
+                    chunks.append(" ".join(tmp).strip())
+                    tmp, tmp_w = [s], sw
+                else:
+                    tmp.append(s)
+                    tmp_w += sw
+            if tmp: chunks.append(" ".join(tmp).strip())
+            continue
+        if cur_w + pw > max_w and cur_w >= min_w:
+            chunks.append("\n\n".join(cur))
+            cur, cur_w = [p], pw
+        else:
+            cur.append(p)
+            cur_w += pw
+    if cur: chunks.append("\n\n".join(cur))
+    return [c.strip() for c in chunks if len(c.split()) >= min_out]
+>>>>>>> 612300915689b1c75ce600abf08a68a1e197ac17
 
 def classify_category_sub(title: str, content: str) -> Tuple[str, str]:
     t = f"{title} {content}".lower()
@@ -330,6 +370,7 @@ def extract_keywords(title: str, content: str, max_kw: int = 8) -> List[str]:
     ranked = sorted(freq.items(), key=lambda x: (-x[1], x[0]))
     return [k for k, _ in ranked[:max_kw]]
 
+<<<<<<< HEAD
 def normalize_chunks(records: List[Dict], min_chars: int = None, max_chars: int = CHUNK_SIZE) -> List[Dict]:
     if min_chars is None:
         min_chars = max(120, max_chars // 2)
@@ -340,6 +381,16 @@ def normalize_chunks(records: List[Dict], min_chars: int = None, max_chars: int 
         if merged and cur_len < min_chars and merged[-1]["category"] == rec["category"]:
             prev_len = len(merged[-1]["content"])
             if prev_len + cur_len + 2 <= max_chars:
+=======
+def normalize_chunks(records: List[Dict], min_w: int = 120, max_w: int = 380) -> List[Dict]:
+    # Pass 1: Merge short chunks
+    merged = []
+    for rec in records:
+        wc = len(rec["content"].split())
+        if merged and wc < min_w and merged[-1]["category"] == rec["category"]:
+            prev_w = len(merged[-1]["content"].split())
+            if prev_w + wc <= max_w:
+>>>>>>> 612300915689b1c75ce600abf08a68a1e197ac17
                 merged[-1]["content"] += "\n\n" + rec["content"]
                 merged[-1]["keywords"] = list(dict.fromkeys(merged[-1]["keywords"] + rec["keywords"]))[:10]
                 if rec["priority"] == "kritis":
@@ -347,6 +398,7 @@ def normalize_chunks(records: List[Dict], min_chars: int = None, max_chars: int 
                     merged[-1]["type"] = "tanda_bahaya"
                 continue
         merged.append(rec)
+<<<<<<< HEAD
 
     final = []
     for rec in merged:
@@ -381,6 +433,54 @@ def build_chunks(source_path: str, output_path: str, profile: str) -> bool:
     pages_lines = extract_lines(source_path)
     if not pages_lines:
         return False
+=======
+    # Pass 2: Split long chunks
+    final = []
+    for rec in merged:
+        wc = len(rec["content"].split())
+        if wc <= max_w:
+            final.append(rec)
+            continue
+        sents = re.split(r"(?<=[.!?])\s+", rec["content"])
+        buf, buf_w, idx = [], 0, 1
+        for s in sents:
+            sw = len(s.split())
+            if buf_w + sw > max_w and buf_w >= min_w:
+                nr = dict(rec)
+                nr["title"] = f"{rec['title']} - Bagian {idx}"
+                nr["content"] = " ".join(buf).strip()
+                final.append(nr)
+                idx += 1; buf, buf_w = [s], sw
+            else: buf.append(s); buf_w += sw
+        if buf:
+            nr = dict(rec)
+            nr["title"] = f"{rec['title']} - Bagian {idx}" if idx > 1 else rec["title"]
+            nr["content"] = " ".join(buf).strip()
+            final.append(nr)
+    return final
+
+# ============================================================================
+# MAIN PIPELINE
+# ============================================================================
+
+def main():
+    parser = argparse.ArgumentParser(description="Build initial chunks from a maternal-child health PDF")
+    parser.add_argument("--source", default=SOURCE_PDF, help="Source PDF file path")
+    parser.add_argument("--out", default=OUT_FILE, help="Output JSON file path")
+    parser.add_argument("--profile", default="balanced", choices=tuple(CHUNK_PROFILES.keys()), help="Chunking profile")
+    args = parser.parse_args()
+
+    if not Path(args.source).exists():
+        logger.error(f"Source PDF not found: {args.source}")
+        return
+
+    Path(args.out).parent.mkdir(parents=True, exist_ok=True)
+    cfg = CHUNK_PROFILES[args.profile]
+
+    logger.info("Extracting text and layout metadata...")
+    pages_lines = extract_lines(args.source)
+    if not pages_lines: return
+>>>>>>> 612300915689b1c75ce600abf08a68a1e197ac17
 
     logger.info("Splitting into sections...")
     sections = split_sections(pages_lines)
@@ -389,6 +489,7 @@ def build_chunks(source_path: str, output_path: str, profile: str) -> bool:
     records = []
     for sec_title, sec_content, sec_page, sec_type in sections:
         for idx, part in enumerate(split_special_blocks(sec_content), 1):
+<<<<<<< HEAD
             chunks = chunk_text(part, max_chars=CHUNK_SIZE, overlap_chars=CHUNK_OVERLAP)
             for i, ch in enumerate(chunks, 1):
                 title = sec_title
@@ -397,6 +498,14 @@ def build_chunks(source_path: str, output_path: str, profile: str) -> bool:
                 if idx > 1:
                     title = f"{title} (Subtopik {idx})"
 
+=======
+            chunks = chunk_text(part, cfg["min_words"], cfg["max_words"], cfg["min_output_words"])
+            for i, ch in enumerate(chunks, 1):
+                title = sec_title
+                if len(chunks) > 1: title = f"{sec_title} - Bagian {i}"
+                if idx > 1: title = f"{title} (Subtopik {idx})"
+                
+>>>>>>> 612300915689b1c75ce600abf08a68a1e197ac17
                 cat, sub = classify_category_sub(title, ch)
                 typ, pri = classify_type_priority(title, ch)
                 rec = {
@@ -409,11 +518,16 @@ def build_chunks(source_path: str, output_path: str, profile: str) -> bool:
                     "start_page": sec_page,
                     "keywords": extract_keywords(title, ch),
                     "priority": pri,
+<<<<<<< HEAD
                     "source": source_path,
+=======
+                    "source": args.source,
+>>>>>>> 612300915689b1c75ce600abf08a68a1e197ac17
                 }
                 records.append(rec)
 
     logger.info("Normalizing chunk sizes (merge/split)...")
+<<<<<<< HEAD
     final = normalize_chunks(records, max_chars=CHUNK_SIZE)
 
     Path(output_path).parent.mkdir(parents=True, exist_ok=True)
@@ -460,6 +574,14 @@ def main():
         return
 
     build_chunks(args.source, args.out, args.profile)
+=======
+    final = normalize_chunks(records, cfg["merge_under"], cfg["merge_max_total"])
+    
+    Path(args.out).write_text(json.dumps(final, ensure_ascii=False, indent=2), encoding="utf-8")
+    
+    lengths = [len(r["content"].split()) for r in final]
+    logger.info(f"Done | Sections: {len(sections)} | Chunks: {len(final)} | Words: {min(lengths)}/{max(lengths)}")
+>>>>>>> 612300915689b1c75ce600abf08a68a1e197ac17
 
 if __name__ == "__main__":
     main()

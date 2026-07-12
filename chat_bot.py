@@ -7,18 +7,24 @@ import json
 import csv
 import requests
 import re
+import warnings
 from datetime import datetime
 from collections import deque
 from pathlib import Path
 from sentence_transformers import SentenceTransformer
 import chromadb
 
-from config import TOP_K, PROJECT_ROOT
+os.environ["HF_HUB_DISABLE_TELEMETRY"] = "1"
+os.environ["TRANSFORMERS_VERBOSITY"] = "error"
+warnings.filterwarnings("ignore")
 
 # ==============================
 # 2. KONFIGURASI
 # ==============================
-EMBEDDING_MODEL = str(Path(__file__).resolve().parent / "bge-m3")
+TOP_K = 3
+PROJECT_ROOT = Path(__file__).resolve().parent
+
+EMBEDDING_MODEL = "BAAI/bge-m3"
 DB_PATH = "./chroma_db"
 COLLECTION_NAME = "docs"
 LM_API_URL = "http://127.0.0.1:1234/v1/chat/completions"
@@ -26,10 +32,11 @@ LLM_MODEL = "google/gemma-4-e2b"
 TEMPERATURE = 0.2
 MAX_HISTORY = 3
 LOG_FILE = "chatbot_logs.jsonl"
-MAX_TOKENS = 2048
+MAX_TOKENS = 4096
 TIMEOUT_SECONDS = 180
 DATASET_EVAL_FILE = PROJECT_ROOT / "dataset_evaluasi.json"
 CSV_INPUT_FILE = PROJECT_ROOT / "data_manual.csv"
+RELEVANCE_THRESHOLD = 0.35
 
 # ==============================
 # 3. INISIALISASI GLOBAL
@@ -78,18 +85,207 @@ def log_interaction(
 def detect_intent(query: str) -> dict:
     """Deteksi intent dasar: greeting dan exit."""
     q = query.lower().strip()
-    greeting_patterns = [r"\bhalo\b", r"\bhai\b", r"\bhello\b", r"\bhi\b", r"\bassalamualaikum\b"]
+    clean_q = re.sub(r'[^\w\s]', '', q).strip()
+    
+    greeting_words = [
+        "halo", "hai", "hello", "hi", "assalamualaikum",
+        "selamat pagi", "selamat siang", "selamat sore", "selamat malam"
+    ]
+    is_only_greeting = clean_q in greeting_words
+    
+    exit_words = ["exit", "quit", "keluar", "bye", "selesai", "terima kasih"]
+    is_exit = clean_q in exit_words
+
     return {
-        "is_greeting": any(re.search(pattern, q) for pattern in greeting_patterns),
-        "is_exit": q in ["exit", "quit", "keluar", "bye", "selesai", "terima kasih"]
+        "is_greeting": is_only_greeting,
+        "is_exit": is_exit
     }
 
 
 def truncate_context(context: str, max_chars: int = 1500) -> str:
-    """Potong konteks jika terlalu panjang untuk LLM."""
+    """Potong konteks di akhir kalimat terakhir agar tidak memotong kata."""
     if len(context) <= max_chars:
         return context
-    return context[:max_chars] + "\n\n[...konten dipotong...]"
+    
+    cut_text = context[:max_chars]
+    last_period = cut_text.rfind('.')
+    if last_period > max_chars * 0.8:
+        return cut_text[:last_period+1] + "\n\n[...konten dipotong...]"
+    
+    return cut_text + "\n\n[...konten dipotong...]"
+
+
+def expand_query(query: str) -> str:
+    """Memperluas query pendek dengan sinonim/kata kunci terkait."""
+    q = query.lower()
+    
+    expansions = {
+        "hamil": ["kehamilan", "ibu hamil", "trimester", "janin", "gravida"],
+        "ciri": ["gejala", "tanda", "keluhan", "simtom"],
+        "halangan": ["menstruasi", "haid", "mens", "datang bulan", "period"],
+        "nifas": ["postpartum", "setelah melahirkan", "pasca persalinan"],
+        "asi": ["air susu ibu", "menyusui", "laktasi", "breastfeeding"],
+        "imunisasi": ["vaksin", "vaksinasi", "suntik"],
+        "bayi": ["newborn", "neonatus", "balita", "anak"],
+        "persalinan": ["melahirkan", "birth", "labor"],
+        "gugur": ["miscarriage", "keguguran", "abortus"],
+        "kontrasepsi": ["kb", "keluarga berencana", "pil kb"],
+        "darah": ["pendarahan", "bleeding", "flek"],
+    }
+    
+    expanded_terms = set()
+    words = q.split()
+    
+    for word in words:
+        for key, synonyms in expansions.items():
+            if key in word or word in key:
+                expanded_terms.update(synonyms)
+    
+    if expanded_terms:
+        synonym_list = list(expanded_terms)[:5]
+        return f"{query} {' '.join(synonym_list)}"
+    
+    return query
+
+
+def resolve_references(query: str) -> str:
+    """
+    PERBAIKAN KUNCI: Deteksi kata referensi dan gabungkan dengan konteks sebelumnya.
+    Menangani: "hal demikian", "itu", "tersebut", "halangan", dll.
+    """
+    q = query.lower().strip()
+    
+    # Kata-kata yang menunjukkan referensi ke percakapan sebelumnya
+    reference_words = [
+        "hal demikian", "hal itu", "hal tersebut", "itu", "tersebut",
+        "tadi", "sebelumnya", "yang itu", "yang tadi", "hal yang sama",
+        "gejala tersebut", "gejala itu", "kondisi tersebut", "kondisi itu",
+        "penyakit itu", "penyakit tersebut", "masalah itu", "masalah tersebut"
+    ]
+    
+    has_reference = any(ref in q for ref in reference_words)
+    
+    if has_reference and conversation_history:
+        # Ambil konteks dari percakapan sebelumnya
+        last_turn = conversation_history[-1]
+        last_query = last_turn.get("query", "")
+        last_answer = last_turn.get("answer", "")
+        
+        # Gabungkan query saat ini dengan query dan jawaban sebelumnya
+        # Ini memastikan retrieval mengambil dokumen yang relevan dengan topik sebelumnya
+        enhanced_query = f"{query} {last_query}"
+        
+        # Jika ada kata "halangan", tambahkan konteks kehamilan
+        if "halangan" in q or "mens" in q or "haid" in q:
+            enhanced_query += " kehamilan menstruasi haid"
+        
+        return enhanced_query
+    
+    return query
+
+
+def clean_response(answer: str, previous_answer: str = "") -> str:
+    """Potong paksa frasa pembuka yang tidak diinginkan dari JAWABAN APAPUN."""
+    if not answer:
+        return answer
+    
+    # DAFTAR LENGKAP frasa pembuka yang HARUS dihapus
+    unwanted_patterns = [
+        # Frasa "Berdasarkan..."
+        r"^[Bb]erdasarkan informasi[^.]*?[:\.]\s*",
+        r"^[Bb]erdasarkan teks[^.]*?[:\.]\s*",
+        r"^[Bb]erdasarkan sumber[^.]*?[:\.]\s*",
+        r"^[Bb]erdasarkan data[^.]*?[:\.]\s*",
+        r"^[Bb]erdasarkan referensi[^.]*?[:\.]\s*",
+        r"^[Bb]erdasarkan catatan[^.]*?[:\.]\s*",
+        r"^[Bb]erdasarkan materi[^.]*?[:\.]\s*",
+        r"^[Bb]erdasarkan penjelasan[^.]*?[:\.]\s*",
+        
+        # Frasa "Dari..."
+        r"^[Dd]ari informasi[^.]*?[:\.]\s*",
+        r"^[Dd]ari sumber[^.]*?[:\.]\s*",
+        r"^[Dd]ari teks[^.]*?[:\.]\s*",
+        r"^[Dd]ari data[^.]*?[:\.]\s*",
+        r"^[Dd]ari referensi[^.]*?[:\.]\s*",
+        
+        # Frasa "Menurut..."
+        r"^[Mm]enurut informasi[^.]*?[:\.]\s*",
+        r"^[Mm]enurut sumber[^.]*?[:\.]\s*",
+        r"^[Mm]enurut teks[^.]*?[:\.]\s*",
+        
+        # Frasa "Mengacu/Merujuk..."
+        r"^[Mm]engacu pada[^.]*?[:\.]\s*",
+        r"^[Mm]erujuk pada[^.]*?[:\.]\s*",
+        r"^[Mm]elihat informasi[^.]*?[:\.]\s*",
+        
+        # Frasa "Sebagaimana..."
+        r"^[Ss]ebagaimana disebutkan[^.]*?[:\.]\s*",
+        r"^[Ss]ebagai informasi[^.]*?[:\.]\s*",
+        
+        # Frasa "Dalam konteks..."
+        r"^[Dd]alam konteks[^.]*?[:\.]\s*",
+        r"^[Dd]alam informasi[^.]*?[:\.]\s*",
+        
+        # Frasa "Teks/Sumber tersebut..."
+        r"^[Tt]eks tersebut[^.]*?[:\.]\s*",
+        r"^[Ss]umber tersebut[^.]*?[:\.]\s*",
+        r"^[Ii]nformasi tersebut[^.]*?[:\.]\s*",
+        
+        # Frasa "Anda memberikan..."
+        r"^[Yy]ang Anda berikan[^.]*?[:\.]\s*",
+        r"^[Yy]ang Anda sampaikan[^.]*?[:\.]\s*",
+        
+        # Frasa "Berikut adalah..."
+        r"^[Bb]erikut (?:adalah|merupakan)[^.]*?[:\.]\s*",
+        r"^[Bb]erikut adalah lanjutan[^.]*?[:\.]\s*",
+        
+        # Frasa "Jawaban lanjutan..."
+        r"^[Jj]awaban lanjutan[:\.]\s*",
+        r"^[Mm]elanjutkan jawaban[:\.]\s*",
+        r"^[Uu]ntuk melanjutkan[^.]*?[:\.]\s*",
+        r"^[Pp]ada jawaban sebelumnya[^.]*?[:\.]\s*",
+        
+        # PERBAIKAN BARU: Frasa "Namun, sebagai..."
+        r"^[Nn]amun, sebagai [^.]*?[:\.]\s*",
+        r"^[Nn]amun sebagai [^.]*?[:\.]\s*",
+        r"^[Nn]amun, saya [^.]*?[:\.]\s*",
+        r"^[Nn]amun saya [^.]*?[:\.]\s*",
+        
+        # PERBAIKAN BARU: Frasa "Mohon maaf..."
+        r"^[Mm]ohon maaf[^.]*?[:\.]\s*",
+        r"^[Mm]aaf[^.]*?[:\.]\s*",
+        
+        # PERBAIKAN BARU: Frasa "Saya dapat/mampu..."
+        r"^[Ss]aya (?:dapat|bisa|mampu)[^.]*?memberikan[^.]*?[:\.]\s*",
+        r"^[Ss]ebagai [^.]*?saya (?:dapat|bisa|mampu)[^.]*?[:\.]\s*",
+        
+        # PERBAIKAN BARU: Frasa "Anda belum menyebutkan..."
+        r"^[Aa]nda belum menyebutkan[^.]*?[:\.]\s*",
+        r"^[Kk]arena Anda belum[^.]*?[:\.]\s*",
+    ]
+    
+    cleaned = answer.strip()
+    
+    # Terapkan semua pola pembersih (lakukan beberapa kali untuk pola bersarang)
+    for _ in range(3):  # Loop 3x untuk menangkap pola bersarang
+        for pattern in unwanted_patterns:
+            cleaned = re.sub(pattern, "", cleaned, flags=re.IGNORECASE).strip()
+    
+    # Deteksi overlap dengan jawaban sebelumnya
+    if previous_answer and len(previous_answer) > 30:
+        prev_sentences = re.split(r'(?<=[.!?])\s+', previous_answer)
+        prev_tail = " ".join(prev_sentences[-3:]).strip()
+        
+        if cleaned.startswith(prev_tail[:50]):
+            for i in range(min(len(cleaned), len(prev_tail)), 0, -1):
+                if not cleaned.startswith(prev_tail[:i]):
+                    cleaned = cleaned[i:].strip()
+                    break
+    
+    if not cleaned:
+        return answer.strip()
+    
+    return cleaned
 
 
 # ==============================
@@ -97,30 +293,43 @@ def truncate_context(context: str, max_chars: int = 1500) -> str:
 # ==============================
 
 def search_documents(query: str, n_results: int = 3):
-    """Cari dokumen relevan dari ChromaDB menggunakan semantic search."""
+    """Cari dokumen relevan dari ChromaDB."""
     try:
         query_embedding = embedder.encode(query).tolist()
         
         results = collection.query(
             query_embeddings=[query_embedding],
-            n_results=n_results
+            n_results=n_results,
+            include=["documents", "metadatas", "distances"]
         )
         
         docs = results.get("documents", [[]])[0]
         metadatas = results.get("metadatas", [[]])[0]
+        distances = results.get("distances", [[]])[0]
         
-        return list(zip(docs, metadatas)) if docs else []
+        return list(zip(docs, metadatas, distances)) if docs else []
         
     except Exception as e:
         print(f"[Error Retrieval] {e}")
         return []
 
 
+def filter_relevant_documents(docs_with_meta: list, threshold: float = None) -> list:
+    """Filter dokumen berdasarkan similarity score."""
+    if threshold is None:
+        threshold = RELEVANCE_THRESHOLD
+    
+    filtered = []
+    for doc, meta, distance in docs_with_meta:
+        similarity = 1 / (1 + distance)
+        if similarity >= threshold:
+            filtered.append((doc, meta, distance, similarity))
+    
+    return filtered
+
+
 def call_llm(prompt: str, max_tokens: int = None, timeout: int = None) -> tuple:
-    """
-    Kirim prompt ke LM Studio API.
-    Returns: (jawaban, is_truncated)
-    """
+    """Kirim prompt ke LM Studio API."""
     max_tokens = max_tokens or MAX_TOKENS
     timeout = timeout or TIMEOUT_SECONDS
     
@@ -142,10 +351,14 @@ def call_llm(prompt: str, max_tokens: int = None, timeout: int = None) -> tuple:
         content = result["choices"][0]["message"]["content"].strip()
         
         finish_reason = result["choices"][0].get("finish_reason", "")
-        is_truncated = (
-            finish_reason == "length" or 
-            (content and len(content) > 100 and content.rstrip()[-1] not in ".!?'\"")
-        )
+        
+        is_truncated = False
+        if content:
+            last_char = content.rstrip()[-1] if content else ""
+            if finish_reason == "length" and last_char not in ".!?\"'":
+                is_truncated = True
+            elif finish_reason not in ["stop", "length"] and last_char not in ".!?\"'":
+                is_truncated = True
         
         return content, is_truncated
         
@@ -157,14 +370,26 @@ def call_llm(prompt: str, max_tokens: int = None, timeout: int = None) -> tuple:
         return f"[Error] {type(e).__name__}: {e}", False
 
 
+def get_contextual_query(query: str) -> str:
+    """Membuat query pencarian lebih kontekstual."""
+    # PERBAIKAN: Gunakan resolve_references untuk mendeteksi kata referensi
+    enhanced_query = resolve_references(query)
+    
+    # Jika query sangat pendek dan tidak ada referensi, gabungkan dengan query sebelumnya
+    if enhanced_query == query:  # Tidak ada referensi yang terdeteksi
+        words = query.split()
+        if len(words) < 5 and conversation_history:
+            last_query = conversation_history[-1].get("query", "")
+            return f"{query} {last_query}"
+    
+    return enhanced_query
+
+
 def generate_response(query: str, ground_truth: str = "") -> tuple:
-    """
-    Generate jawaban menggunakan pipeline RAG.
-    Returns: (jawaban, is_truncated)
-    """
+    """Generate jawaban menggunakan pipeline RAG."""
     intents = detect_intent(query)
     if intents["is_greeting"]:
-       return (
+        return (
             "Halo! Saya adalah asisten edukasi kesehatan ibu dan anak.\n"
             "Saya siap membantu memberikan informasi seputar:\n\n"
             "- Kehamilan, persiapan persalinan, dan masa nifas\n"
@@ -176,61 +401,132 @@ def generate_response(query: str, ground_truth: str = "") -> tuple:
             False
         )
     
-    print("Mencari referensi...", end="\r")
-    docs_with_meta = search_documents(query, n_results=TOP_K)
+    # PERBAIKAN KUNCI: Query Enhancement Pipeline
+    # 1. Resolve references (hal demikian, itu, tersebut)
+    # 2. Get contextual query (gabungkan dengan percakapan sebelumnya)
+    # 3. Expand query (tambahkan sinonim)
+    enhanced_query = get_contextual_query(query)
+    expanded_query = expand_query(enhanced_query)
+    
+    print(f"Mencari referensi...", end="\r")
+    docs_with_meta = search_documents(expanded_query, n_results=TOP_K * 2)
     print(" " * 40, end="\r")
     
-    if not docs_with_meta:
-        fallback = (
-            "Maaf, saya belum menemukan informasi spesifik tentang hal tersebut.\n\n"
-            "Saran:\n"
-            "- Coba gunakan kata kunci yang berbeda\n"
-            "- Konsultasikan dengan tenaga kesehatan di Puskemas Kuranji\n"
-            "- Untuk keadaan darurat, segera hubungi 119 atau Puskesmas Kuranji"
-        )
+    relevant_docs = filter_relevant_documents(docs_with_meta)
+    
+    # Bangun riwayat percakapan untuk konteks
+    history_text = ""
+    for turn in conversation_history:
+        history_text += f"Pengguna: {turn['query']}\nAsisten: {turn['answer']}\n\n"
+    
+    if not relevant_docs:
+        # Fallback ke pengetahuan umum
+        prompt = f"""Anda adalah dokter/bidan yang ramah dan profesional.
+
+RIWAYAT PERCAKAPAN:
+{history_text}
+
+PERTANYAAN PASIEN:
+{query}
+
+TUGAS:
+Jawab pertanyaan pasien secara langsung, jelas, dan empatik menggunakan pengetahuan umum Anda tentang kesehatan ibu dan anak.
+
+ATURAN PENTING:
+1. LANGSUNG mulai dengan jawaban - JANGAN pakai pembuka seperti "Berdasarkan...", "Namun, sebagai...", "Mohon maaf...", dll.
+2. JANGAN menyebut "sumber", "referensi", atau "teks".
+3. Gunakan bahasa Indonesia yang natural seperti dokter yang sedang berbicara dengan pasien.
+4. Pahami konteks percakapan sebelumnya untuk menjawab pertanyaan yang merujuk ke topik sebelumnya.
+5. Gunakan format poin (-) untuk daftar jika diperlukan.
+6. Untuk kondisi darurat, sarankan untuk segera ke Puskesmas Kuranji.
+
+JAWABAN ANDA (langsung ke inti):"""
+        
+        print("Menyusun jawaban (pengetahuan umum)...", end="\r")
+        answer, is_truncated = call_llm(prompt)
+        print(" " * 40, end="\r")
+        
+        answer = clean_response(answer)
+        
+        if is_truncated:
+            answer += "\n\n*(Jawaban terpotong. Silakan ketik 'lanjutkan' untuk melanjutkan)*"
+        
+        conversation_history.append({
+            "query": query,
+            "answer": answer,
+            "context": "GENERAL_KNOWLEDGE",
+            "timestamp": datetime.now().isoformat()
+        })
+        
         log_interaction(
-            query,
-            fallback,
-            context="NO_RESULTS",
+            query=query,
+            answer=answer,
+            context="GENERAL_KNOWLEDGE",
             contexts=[],
             ground_truth=ground_truth,
-            metadata={"fallback": True},
+            metadata={
+                "mode": "general_knowledge", 
+                "truncated": is_truncated,
+                "enhanced_query": expanded_query
+            }
         )
-        return fallback, False
+        
+        return answer, is_truncated
     
-    docs = [d[0] for d in docs_with_meta]
+    # Ada dokumen relevan → gunakan RAG
+    docs = [d[0] for d in relevant_docs]
     context = "\n\n---\n\n".join(docs)
     
     if len(context) > 1500:
         context = truncate_context(context)
     
-    prompt = f"""Anda adalah asisten kesehatan ibu dan anak yang terpercaya.
+    # PERBAIKAN KUNCI: Prompt yang menekankan konteks percakapan
+    prompt = f"""Anda adalah dokter/bidan yang ramah sedang berbicara langsung dengan pasien.
 
-INFORMASI SUMBER (gunakan HANYA ini untuk menjawab):
+CATATAN MEDIS (untuk referensi internal Anda - JANGAN sebutkan ini ke pasien):
+---
 {context}
+---
 
-PERTANYAAN PENGGUNA:
+RIWAYAT PERCAKAPAN:
+{history_text}
+
+PERTANYAAN PASIEN SAAT INI:
 {query}
 
-INSTRUKSI:
-1. Jawab berdasarkan informasi sumber di atas
-2. Jika informasi tidak cukup, katakan dengan jujur
-3. Gunakan bahasa Indonesia yang jelas dan mudah dipahami
-4. Untuk kondisi darurat, sarankan untuk segera ke Puskemas Kuranji
-5. Gunakan format poin (-) untuk daftar jika diperlukan
+TUGAS ANDA:
+Jawab pertanyaan pasien secara langsung, jelas, dan empatik seperti dokter profesional.
 
-JAWABAN:"""
+ATURAN SANGAT PENTING:
+1. PAHAMI KONTEKS PERCAKAPAN - Jika pasien menyebut "hal demikian", "itu", "tersebut", atau merujuk ke pertanyaan sebelumnya, gunakan konteks dari riwayat percakapan untuk memahami apa yang dimaksud.
+2. LANGSUNG mulai menjawab - JANGAN pakai frasa seperti:
+   - "Berdasarkan informasi..."
+   - "Namun, sebagai asisten..."
+   - "Mohon maaf..."
+   - "Anda belum menyebutkan..."
+   - "Dari sumber yang diberikan..."
+   - "Menurut catatan..."
+3. JANGAN PERNAH menyebut "sumber", "referensi", "catatan", atau "teks" dalam jawaban.
+4. Gunakan bahasa Indonesia yang natural dan mudah dipahami.
+5. Jika kondisi serius, sarankan untuk segera ke Puskesmas Kuranji.
+6. Gunakan format poin (-) untuk daftar jika perlu.
+7. Bersikaplah empatik dan profesional.
+
+JAWABAN ANDA KE PASIEN (langsung ke inti, tanpa pembuka):"""
     
     print("Menyusun jawaban...", end="\r")
     answer, is_truncated = call_llm(prompt)
     print(" " * 40, end="\r")
     
+    answer = clean_response(answer)
+    
     if is_truncated:
-        answer += "\n\n*(Jawaban terpotong. Silakan tanya 'lanjutkan' untuk melanjutkan)*"
+        answer += "\n\n*(Jawaban terpotong. Silakan ketik 'lanjutkan' untuk melanjutkan)*"
     
     conversation_history.append({
         "query": query,
         "answer": answer,
+        "context": context,
         "timestamp": datetime.now().isoformat()
     })
     
@@ -243,8 +539,68 @@ JAWABAN:"""
         metadata={
             "doc_count": len(docs),
             "truncated": is_truncated,
-            "answer_length": len(answer)
+            "answer_length": len(answer),
+            "avg_similarity": sum(d[3] for d in relevant_docs) / len(relevant_docs) if relevant_docs else 0,
+            "enhanced_query": expanded_query
         }
+    )
+    
+    return answer, is_truncated
+
+
+def continue_response():
+    """Melanjutkan jawaban RAG yang terpotong."""
+    if not conversation_history:
+        return "Maaf, belum ada jawaban sebelumnya yang bisa dilanjutkan. Silakan ajukan pertanyaan baru.", False
+    
+    last_data = conversation_history[-1]
+    last_answer = last_data.get("answer", "")
+    last_context = last_data.get("context", "")
+    
+    if not last_context or last_context == "NO_RESULTS":
+        return "Jawaban sebelumnya tidak memiliki referensi yang cukup untuk dilanjutkan.", False
+
+    prompt = f"""Anda sedang melanjutkan kalimat yang terpotong.
+
+CATATAN MEDIS:
+{last_context}
+
+JAWABAN YANG TERPOTONG (akhiran):
+"...{last_answer[-200:]}"
+
+TUGAS: Tulis 2-3 kalimat berikutnya yang nyambung secara tata bahasa.
+
+ATURAN WAJIB:
+1. LANGSUNG mulai dengan kata pertama kalimat baru.
+2. JANGAN tulis kata pembuka apapun (seperti "Berdasarkan...", "Jawaban lanjutan:", dll).
+3. JANGAN ulangi kalimat yang sudah ada.
+
+CONTOH BENAR:
+Jika terpotong di: "...ibu hamil juga sering mengalami mual"
+Maka tulis: "Selain itu, rasa lelah berlebih juga umum dirasakan. Pastikan ibu tetap istirahat cukup."
+
+TULIS LANJUTANNYA SEKARANG (tanpa pembuka apapun):"""
+
+    print("Melanjutkan jawaban...", end="\r")
+    answer, is_truncated = call_llm(prompt)
+    print(" " * 40, end="\r")
+    
+    answer = clean_response(answer, last_answer)
+    
+    if not answer or len(answer) < 20:
+        answer = "Maaf, terjadi kesalahan saat melanjutkan jawaban. Silakan ajukan pertanyaan baru."
+        is_truncated = False
+    elif is_truncated:
+        answer += "\n\n*(Masih terpotong. Ketik 'lanjutkan' lagi jika perlu)*"
+        
+    conversation_history[-1]["answer"] = last_answer + " " + answer
+    
+    log_interaction(
+        query="[PERINTAH: LANJUTKAN]",
+        answer=answer,
+        context=last_context,
+        contexts=[],
+        metadata={"is_continuation": True, "cleaned": True}
     )
     
     return answer, is_truncated
@@ -296,22 +652,13 @@ def show_logs(n: int = 5):
 # ==============================
 
 def convert_csv_to_json():
-    """
-    Konversi file CSV manual (data_manual.csv) menjadi dataset_evaluasi.json.
-    File CSV harus memiliki 2 kolom: 'question' dan 'ground_truth'.
-    """
+    """Konversi file CSV manual menjadi dataset_evaluasi.json."""
     print("=" * 60)
     print("MODE KONVERSI CSV KE JSON")
     print("=" * 60)
     
     if not CSV_INPUT_FILE.exists():
         print(f"[ERROR] File {CSV_INPUT_FILE} tidak ditemukan.")
-        print(f"   Silakan buat file CSV terlebih dahulu dengan format:")
-        print(f"   Kolom 1: question")
-        print(f"   Kolom 2: ground_truth")
-        print(f"   Contoh isi:")
-        print(f"   question,ground_truth")
-        print(f"   \"Apa itu ASI?\",\"ASI adalah air susu ibu...\"")
         return
     
     dataset = []
@@ -321,7 +668,6 @@ def convert_csv_to_json():
             for row in reader:
                 if "question" not in row or "ground_truth" not in row:
                     print("[WARNING] File CSV harus memiliki kolom 'question' dan 'ground_truth'")
-                    print(f"   Kolom yang ditemukan: {list(row.keys())}")
                     return
                 
                 if not row["question"].strip() or not row["ground_truth"].strip():
@@ -345,9 +691,6 @@ def convert_csv_to_json():
         
         print(f"\n[OK] Berhasil mengonversi {len(dataset)} pertanyaan.")
         print(f"File tersimpan di: {DATASET_EVAL_FILE}")
-        print("\nLangkah selanjutnya:")
-        print("   python chat_bot.py eval    -> Uji semua pertanyaan otomatis")
-        print("   python chat_bot.py chat    -> Chat interaktif")
         print("=" * 60)
     except Exception as e:
         print(f"[ERROR] Gagal menyimpan file JSON: {e}")
@@ -358,17 +701,13 @@ def convert_csv_to_json():
 # ==============================
 
 def run_evaluation():
-    """
-    Menjalankan chatbot secara otomatis menggunakan dataset evaluasi 
-    untuk mengisi nilai ground_truth pada log.
-    """
+    """Menjalankan chatbot secara otomatis menggunakan dataset evaluasi."""
     print("\n" + "="*60)
     print("MEMULAI MODE EVALUASI RAG")
     print("="*60)
 
     if not DATASET_EVAL_FILE.exists():
         print(f"[ERROR] File dataset evaluasi tidak ditemukan: {DATASET_EVAL_FILE}")
-        print("   Jalankan 'python chat_bot.py convert' terlebih dahulu.")
         return
 
     try:
@@ -383,7 +722,6 @@ def run_evaluation():
         return
 
     print(f"[OK] Dataset berhasil dimuat: {len(dataset)} pertanyaan")
-    print(f"Log akan disimpan ke: {LOG_FILE}")
     print("="*60 + "\n")
 
     if os.path.exists(LOG_FILE):
@@ -404,33 +742,42 @@ def run_evaluation():
             print("   [SKIP] Greeting detected")
             continue
 
-        docs_with_meta = search_documents(query, n_results=TOP_K)
+        expanded_query = expand_query(query)
+        docs_with_meta = search_documents(expanded_query, n_results=TOP_K * 2)
+        relevant_docs = filter_relevant_documents(docs_with_meta)
         
-        if not docs_with_meta:
-            answer = "Maaf, tidak ditemukan informasi."
+        if not relevant_docs:
+            prompt = f"""Anda adalah dokter/bidan yang ramah.
+Pengguna bertanya: "{query}"
+Jawablah berdasarkan pengetahuan umum Anda.
+Gunakan bahasa Indonesia yang jelas.
+LANGSUNG jawab tanpa pembuka.
+
+JAWABAN:"""
+            answer, _ = call_llm(prompt)
+            answer = clean_response(answer)
             docs = []
-            context = "NO_RESULTS"
+            context = "GENERAL_KNOWLEDGE"
         else:
-            docs = [d[0] for d in docs_with_meta]
+            docs = [d[0] for d in relevant_docs]
             context = "\n\n---\n\n".join(docs)
             if len(context) > 1500:
                 context = truncate_context(context)
                 
-            prompt = f"""Anda adalah asisten kesehatan ibu dan anak yang terpercaya.
+            prompt = f"""Anda adalah dokter/bidan yang ramah.
 
-INFORMASI SUMBER (gunakan HANYA ini untuk menjawab):
+CATATAN MEDIS (referensi internal - JANGAN sebutkan):
 {context}
 
-PERTANYAAN PENGGUNA:
+PERTANYAAN PASIEN:
 {query}
 
-INSTRUKSI:
-1. Jawab berdasarkan informasi sumber di atas.
-2. Jika informasi tidak cukup, katakan dengan jujur.
-3. Gunakan bahasa Indonesia yang jelas.
+Jawab langsung tanpa pembuka seperti "Berdasarkan...", "Dari sumber...", dll.
+Gunakan bahasa Indonesia yang jelas.
 
 JAWABAN:"""
             answer, _ = call_llm(prompt)
+            answer = clean_response(answer)
 
         log_interaction(
             query=query,
@@ -440,17 +787,13 @@ JAWABAN:"""
             ground_truth=ground_truth,
             metadata={
                 "doc_count": len(docs),
-                "evaluation_mode": True,
-                "source_title": item.get("source_title", ""),
-                "source_page": item.get("source_page", "")
+                "evaluation_mode": True
             }
         )
         print(f"   [OK] Jawaban & ground_truth tersimpan.\n")
 
     print("="*60)
     print(f"[SELESAI] {len(dataset)} pertanyaan telah diuji.")
-    print(f"File log: {LOG_FILE}")
-    print(f"Silakan jalankan RAGAS untuk menghitung 4 metrik evaluasi.")
     print("="*60 + "\n")
 
 
@@ -464,9 +807,9 @@ def main():
     print("CHATBOT EDUKASI KESEHATAN IBU DAN ANAK")
     print("=" * 60)
     print("Perintah khusus:")
-    print("  /exit   -> Keluar dari chatbot")
-    print("  /logs   -> Lihat riwayat interaksi")
-    print("  /help   -> Tampilkan panduan ini")
+    print("  /exit     -> Keluar dari chatbot")
+    print("  /logs     -> Lihat riwayat interaksi")
+    print("  /help     -> Tampilkan panduan ini")
     print("-" * 60)
     print("\nMode lain (jalankan dari terminal):")
     print("   python chat_bot.py convert  -> Konversi CSV ke JSON")
@@ -489,7 +832,6 @@ def main():
                 show_logs(10)
                 continue
             
-            
             elif query.lower() in ["/help", "help", "?"]:
                 print("\nPANDUAN PENGGUNAAN:")
                 print("- Ketik pertanyaan kesehatan ibu/anak secara alami")
@@ -497,12 +839,22 @@ def main():
                 print("- Untuk darurat: hubungi 119 atau Puskesmas Kuranji\n")
                 continue
             
+            if query.lower() in ["lanjutkan", "lanjut", "continue"]:
+                print("Chatbot: ", end="", flush=True)
+                answer, was_truncated = continue_response()
+                print(answer)
+                
+                if was_truncated:
+                    print("\nTips: Jawaban masih terpotong. Ketik 'lanjutkan' lagi jika perlu.")
+                print("\n" + "-" * 60)
+                continue
+            
             print("Chatbot: ", end="", flush=True)
             answer, was_truncated = generate_response(query)
             print(answer)
             
             if was_truncated:
-                print("\nTips: Ketik 'lanjutkan' untuk melanjutkan jawaban.")
+                print("\nTips: Jawaban terpotong. Ketik 'lanjutkan' untuk melanjutkan.")
             
             print("\n" + "-" * 60)
             
@@ -524,18 +876,11 @@ if __name__ == "__main__":
         
         if mode == "convert":
             convert_csv_to_json()
-            
         elif mode == "eval":
             run_evaluation()
-            
         elif mode == "chat":
             main()
-            
         else:
             print("[ERROR] Mode tidak dikenali.")
-            print("\nCara penggunaan:")
-            print("   python chat_bot.py convert  -> Konversi CSV manual ke JSON")
-            print("   python chat_bot.py eval     -> Evaluasi otomatis semua pertanyaan")
-            print("   python chat_bot.py chat     -> Chat interaktif (default)")
     else:
         main()
