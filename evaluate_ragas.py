@@ -124,9 +124,12 @@ def choose_metrics(records: list[dict], include_reference_metrics: bool):
 
     return metrics
 
-
 def build_ragas_llm(args):
-    print(f"Menghubungkan Ragas judge ke LM Studio: {args.llm_base_url} ({args.llm_model})")
+    print(
+        f"Menghubungkan Ragas judge ke LM Studio: "
+        f"{args.llm_base_url} ({args.llm_model})"
+    )
+
     openai_client = OpenAI(
         base_url=args.llm_base_url,
         api_key=args.llm_api_key,
@@ -134,32 +137,24 @@ def build_ragas_llm(args):
         timeout=args.llm_timeout,
     )
 
-    if args.instructor_mode == "json_schema":
-        import instructor
+    import instructor
 
-        patched_client = instructor.from_openai(
-            openai_client,
-            mode=instructor.Mode.JSON_SCHEMA,
-        )
-        return InstructorLLM(
-            client=patched_client,
-            model=args.llm_model,
-            provider="openai",
-            model_args=InstructorModelArgs(
-                temperature=0.01,
-                top_p=0.1,
-                max_tokens=args.judge_max_tokens,
-            ),
-        )
-
-    return llm_factory(
-        model=args.llm_model,
-        provider="openai",
-        client=openai_client,
-        adapter=args.adapter,
-        temperature=0,
+    # Gunakan JSON Schema agar output sesuai format yang diharapkan RAGAS
+    patched_client = instructor.from_openai(
+        openai_client,
+        mode=instructor.Mode.JSON_SCHEMA,
     )
 
+    return InstructorLLM(
+        client=patched_client,
+        model=args.llm_model,
+        provider="openai",
+        model_args=InstructorModelArgs(
+            temperature=0,
+            top_p=1.0,
+            max_tokens=args.judge_max_tokens,
+        ),
+    )
 
 def build_ragas_embeddings():
     print(f"Memuat embedding evaluator dari: {EMBEDDING_MODEL_PATH}")
@@ -271,7 +266,7 @@ def main():
     parser.add_argument(
         "--judge-max-tokens",
         type=int,
-        default=int(os.getenv("RAGAS_JUDGE_MAX_TOKENS", "2048")),
+        default=int(os.getenv("RAGAS_JUDGE_MAX_TOKENS", "4096")),
         help="Maksimum token respons LLM judge.",
     )
     parser.add_argument(

@@ -262,6 +262,14 @@ def clean_response(answer: str, previous_answer: str = "") -> str:
         # PERBAIKAN BARU: Frasa "Anda belum menyebutkan..."
         r"^[Aa]nda belum menyebutkan[^.]*?[:\.]\s*",
         r"^[Kk]arena Anda belum[^.]*?[:\.]\s*",
+        
+        # PERBAIKAN BARU: Frasa pembuka evaluasi yang umum
+        r"^[Uu]ntuk menjawab pertanyaan ini[^.]*?[:\.]\s*",
+        r"^[Mm]enjawab pertanyaan[^.]*?[:\.]\s*",
+        r"^[Jj]awaban untuk pertanyaan[^.]*?[:\.]\s*",
+        r"^[Tt]erkait dengan pertanyaan[^.]*?[:\.]\s*",
+        r"^[Mm]engenai pertanyaan[^.]*?[:\.]\s*",
+        r"^[Uu]ntuk pertanyaan[^.]*?[:\.]\s*",
     ]
     
     cleaned = answer.strip()
@@ -697,7 +705,7 @@ def convert_csv_to_json():
 
 
 # ==============================
-# 8. MODE EVALUASI
+# 8. MODE EVALUASI - DIPERBAIKI DENGAN PROMPT KETAT
 # ==============================
 
 def run_evaluation():
@@ -747,13 +755,30 @@ def run_evaluation():
         relevant_docs = filter_relevant_documents(docs_with_meta)
         
         if not relevant_docs:
-            prompt = f"""Anda adalah dokter/bidan yang ramah.
-Pengguna bertanya: "{query}"
-Jawablah berdasarkan pengetahuan umum Anda.
-Gunakan bahasa Indonesia yang jelas.
-LANGSUNG jawab tanpa pembuka.
+            # PERBAIKAN: Prompt untuk pengetahuan umum yang sangat ketat
+            prompt = f"""Anda adalah asisten kesehatan ibu dan anak yang menjawab pertanyaan evaluasi.
 
-JAWABAN:"""
+PERTANYAAN:
+{query}
+
+TUGAS:
+Jawab pertanyaan tersebut secara SINGKAT, PADAT, dan LANGSUNG KE INTI menggunakan pengetahuan umum Anda.
+
+ATURAN SANGAT KETAT:
+1. Jawab dalam 1-3 kalimat saja - JANGAN bertele-tele.
+2. LANGSUNG berikan jawaban - JANGAN pakai pembuka seperti "Berdasarkan...", "Untuk menjawab...", dll.
+3. Jika pertanyaan meminta angka/data spesifik, berikan angka tersebut langsung.
+4. JANGAN menambahkan penjelasan panjang lebar yang tidak diperlukan.
+5. Gunakan bahasa Indonesia yang jelas.
+
+CONTOH BENAR:
+Pertanyaan: "Berapa kali minimal ibu hamil periksa?"
+Jawaban: "Minimal 6 kali selama kehamilan."
+
+CONTOH SALAH:
+"Untuk menjawab pertanyaan ini, berdasarkan pengetahuan umum, ibu hamil sebaiknya melakukan pemeriksaan kehamilan minimal 6 kali selama masa kehamilannya untuk memastikan kesehatan ibu dan janin."
+
+JAWABAN ANDA (singkat dan langsung):"""
             answer, _ = call_llm(prompt)
             answer = clean_response(answer)
             docs = []
@@ -764,18 +789,40 @@ JAWABAN:"""
             if len(context) > 1500:
                 context = truncate_context(context)
                 
-            prompt = f"""Anda adalah dokter/bidan yang ramah.
+            # PERBAIKAN KUNCI: Prompt evaluasi yang sangat ketat
+            prompt = f"""Anda adalah asisten yang menjawab pertanyaan evaluasi berdasarkan dokumen yang diberikan.
 
-CATATAN MEDIS (referensi internal - JANGAN sebutkan):
+DOKUMEN SUMBER:
 {context}
 
-PERTANYAAN PASIEN:
+PERTANYAAN:
 {query}
 
-Jawab langsung tanpa pembuka seperti "Berdasarkan...", "Dari sumber...", dll.
-Gunakan bahasa Indonesia yang jelas.
+TUGAS:
+Jawab pertanyaan tersebut secara SINGKAT, PADAT, dan AKURAT berdasarkan dokumen di atas.
 
-JAWABAN:"""
+ATURAN SANGAT KETAT:
+1. Jawab dalam 1-3 kalimat saja - JANGAN bertele-tele.
+2. LANGSUNG berikan jawaban - JANGAN pakai pembuka seperti "Berdasarkan informasi...", "Dari sumber...", "Menurut dokumen...", dll.
+3. JANGAN menyebut "sumber", "dokumen", "informasi", atau "teks" dalam jawaban.
+4. Jika pertanyaan meminta angka/data spesifik (berapa kali, berapa persen, berapa kg, dll), KUTIP ANGKA TERSEBUT LANGSUNG dari dokumen.
+5. JANGAN melakukan generalisasi atau interpretasi - gunakan data persis dari dokumen.
+6. JANGAN menambahkan penjelasan panjang lebar yang tidak diperlukan.
+7. Jika dokumen tidak menjawab pertanyaan, katakan "Tidak ada informasi" dalam 1 kalimat.
+
+CONTOH BENAR:
+Pertanyaan: "Berapa kali minimal ibu hamil periksa?"
+Dokumen: "...pemeriksaan kehamilan dilakukan minimal sebanyak 6 kali..."
+Jawaban: "Minimal 6 kali selama kehamilan."
+
+Pertanyaan: "Berapa persen perkembangan otak saat lahir?"
+Dokumen: "...25% saat lahir..."
+Jawaban: "25% saat lahir."
+
+CONTOH SALAH:
+"Untuk menjawab pertanyaan ini, berdasarkan informasi yang diberikan dalam dokumen, ibu hamil sebaiknya melakukan pemeriksaan kehamilan minimal 6 kali selama masa kehamilannya di fasilitas kesehatan terdekat untuk memastikan kesehatan ibu dan janin."
+
+JAWABAN ANDA (singkat, langsung, tanpa pembuka):"""
             answer, _ = call_llm(prompt)
             answer = clean_response(answer)
 
