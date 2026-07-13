@@ -248,7 +248,7 @@ def main():
     parser.add_argument(
         "--llm-timeout",
         type=float,
-        default=float(os.getenv("RAGAS_LLM_TIMEOUT", "180")),
+        default=float(os.getenv("RAGAS_LLM_TIMEOUT", "300")),  # UBAH DARI 180 KE 300
         help="Timeout request LLM judge dalam detik.",
     )
     parser.add_argument(
