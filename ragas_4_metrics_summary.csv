@@ -1,5 +1,5 @@
 ﻿metric,average_score
-faithfulness,0.7916
-answer_relevancy,0.7602
-context_precision,0.5524
-context_recall,0.8247
+faithfulness,0.8639
+answer_relevancy,0.7919
+context_precision,0.5573
+context_recall,0.7935
