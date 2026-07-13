@@ -36,7 +36,7 @@ MAX_TOKENS = 4096
 TIMEOUT_SECONDS = 180
 DATASET_EVAL_FILE = PROJECT_ROOT / "dataset_evaluasi.json"
 CSV_INPUT_FILE = PROJECT_ROOT / "data_manual.csv"
-RELEVANCE_THRESHOLD = 0.35
+RELEVANCE_THRESHOLD = 0.25  # DIPERBAIKI: Turunkan dari 0.35 ke 0.25
 
 # ==============================
 # 3. INISIALISASI GLOBAL
@@ -102,8 +102,9 @@ def detect_intent(query: str) -> dict:
     }
 
 
-def truncate_context(context: str, max_chars: int = 1500) -> str:
+def truncate_context(context: str, max_chars: int = 2000) -> str:
     """Potong konteks di akhir kalimat terakhir agar tidak memotong kata."""
+    # DIPERBAIKI: Naikkan max_chars dari 1500 ke 2000
     if len(context) <= max_chars:
         return context
     
@@ -119,6 +120,7 @@ def expand_query(query: str) -> str:
     """Memperluas query pendek dengan sinonim/kata kunci terkait."""
     q = query.lower()
     
+    # DIPERBAIKI: Tambahkan mapping untuk pertanyaan numerik/spesifik
     expansions = {
         "hamil": ["kehamilan", "ibu hamil", "trimester", "janin", "gravida"],
         "ciri": ["gejala", "tanda", "keluhan", "simtom"],
@@ -131,6 +133,15 @@ def expand_query(query: str) -> str:
         "gugur": ["miscarriage", "keguguran", "abortus"],
         "kontrasepsi": ["kb", "keluarga berencana", "pil kb"],
         "darah": ["pendarahan", "bleeding", "flek"],
+        # TAMBAHAN BARU: Pertanyaan numerik dan spesifik
+        "berat": ["berat badan", "bb", "weight", "kenaikan", "massa"],
+        "otak": ["perkembangan otak", "brain", "neural", "kognitif"],
+        "persen": ["persentase", "presentase", "%", "prosentase", "proporsi"],
+        "kisar": ["kisaran", "range", "rentang", "batas", "interval"],
+        "bulan": ["minggu", "trimester", "usia kehamilan", "gestasi"],
+        "kali": ["frekuensi", "jumlah", "berapa kali", "intensitas"],
+        "minimal": ["minimum", "paling sedikit", "batas bawah"],
+        "maksimal": ["maksimum", "paling banyak", "batas atas"],
     }
     
     expanded_terms = set()
@@ -150,12 +161,10 @@ def expand_query(query: str) -> str:
 
 def resolve_references(query: str) -> str:
     """
-    PERBAIKAN KUNCI: Deteksi kata referensi dan gabungkan dengan konteks sebelumnya.
-    Menangani: "hal demikian", "itu", "tersebut", "halangan", dll.
+    Deteksi kata referensi dan gabungkan dengan konteks sebelumnya.
     """
     q = query.lower().strip()
     
-    # Kata-kata yang menunjukkan referensi ke percakapan sebelumnya
     reference_words = [
         "hal demikian", "hal itu", "hal tersebut", "itu", "tersebut",
         "tadi", "sebelumnya", "yang itu", "yang tadi", "hal yang sama",
@@ -166,16 +175,12 @@ def resolve_references(query: str) -> str:
     has_reference = any(ref in q for ref in reference_words)
     
     if has_reference and conversation_history:
-        # Ambil konteks dari percakapan sebelumnya
         last_turn = conversation_history[-1]
         last_query = last_turn.get("query", "")
         last_answer = last_turn.get("answer", "")
         
-        # Gabungkan query saat ini dengan query dan jawaban sebelumnya
-        # Ini memastikan retrieval mengambil dokumen yang relevan dengan topik sebelumnya
         enhanced_query = f"{query} {last_query}"
         
-        # Jika ada kata "halangan", tambahkan konteks kehamilan
         if "halangan" in q or "mens" in q or "haid" in q:
             enhanced_query += " kehamilan menstruasi haid"
         
@@ -185,99 +190,27 @@ def resolve_references(query: str) -> str:
 
 
 def clean_response(answer: str, previous_answer: str = "") -> str:
-    """Potong paksa frasa pembuka yang tidak diinginkan dari JAWABAN APAPUN."""
+    """Potong frasa pembuka yang tidak diinginkan dari jawaban."""
     if not answer:
         return answer
     
-    # DAFTAR LENGKAP frasa pembuka yang HARUS dihapus
+    # DIPERBAIKI: Kurangi jumlah pattern dan loop
     unwanted_patterns = [
-        # Frasa "Berdasarkan..."
-        r"^[Bb]erdasarkan informasi[^.]*?[:\.]\s*",
-        r"^[Bb]erdasarkan teks[^.]*?[:\.]\s*",
-        r"^[Bb]erdasarkan sumber[^.]*?[:\.]\s*",
-        r"^[Bb]erdasarkan data[^.]*?[:\.]\s*",
-        r"^[Bb]erdasarkan referensi[^.]*?[:\.]\s*",
-        r"^[Bb]erdasarkan catatan[^.]*?[:\.]\s*",
-        r"^[Bb]erdasarkan materi[^.]*?[:\.]\s*",
-        r"^[Bb]erdasarkan penjelasan[^.]*?[:\.]\s*",
-        
-        # Frasa "Dari..."
-        r"^[Dd]ari informasi[^.]*?[:\.]\s*",
-        r"^[Dd]ari sumber[^.]*?[:\.]\s*",
-        r"^[Dd]ari teks[^.]*?[:\.]\s*",
-        r"^[Dd]ari data[^.]*?[:\.]\s*",
-        r"^[Dd]ari referensi[^.]*?[:\.]\s*",
-        
-        # Frasa "Menurut..."
-        r"^[Mm]enurut informasi[^.]*?[:\.]\s*",
-        r"^[Mm]enurut sumber[^.]*?[:\.]\s*",
-        r"^[Mm]enurut teks[^.]*?[:\.]\s*",
-        
-        # Frasa "Mengacu/Merujuk..."
-        r"^[Mm]engacu pada[^.]*?[:\.]\s*",
-        r"^[Mm]erujuk pada[^.]*?[:\.]\s*",
-        r"^[Mm]elihat informasi[^.]*?[:\.]\s*",
-        
-        # Frasa "Sebagaimana..."
-        r"^[Ss]ebagaimana disebutkan[^.]*?[:\.]\s*",
-        r"^[Ss]ebagai informasi[^.]*?[:\.]\s*",
-        
-        # Frasa "Dalam konteks..."
-        r"^[Dd]alam konteks[^.]*?[:\.]\s*",
-        r"^[Dd]alam informasi[^.]*?[:\.]\s*",
-        
-        # Frasa "Teks/Sumber tersebut..."
-        r"^[Tt]eks tersebut[^.]*?[:\.]\s*",
-        r"^[Ss]umber tersebut[^.]*?[:\.]\s*",
-        r"^[Ii]nformasi tersebut[^.]*?[:\.]\s*",
-        
-        # Frasa "Anda memberikan..."
-        r"^[Yy]ang Anda berikan[^.]*?[:\.]\s*",
-        r"^[Yy]ang Anda sampaikan[^.]*?[:\.]\s*",
-        
-        # Frasa "Berikut adalah..."
-        r"^[Bb]erikut (?:adalah|merupakan)[^.]*?[:\.]\s*",
-        r"^[Bb]erikut adalah lanjutan[^.]*?[:\.]\s*",
-        
-        # Frasa "Jawaban lanjutan..."
-        r"^[Jj]awaban lanjutan[:\.]\s*",
-        r"^[Mm]elanjutkan jawaban[:\.]\s*",
-        r"^[Uu]ntuk melanjutkan[^.]*?[:\.]\s*",
-        r"^[Pp]ada jawaban sebelumnya[^.]*?[:\.]\s*",
-        
-        # PERBAIKAN BARU: Frasa "Namun, sebagai..."
-        r"^[Nn]amun, sebagai [^.]*?[:\.]\s*",
-        r"^[Nn]amun sebagai [^.]*?[:\.]\s*",
-        r"^[Nn]amun, saya [^.]*?[:\.]\s*",
-        r"^[Nn]amun saya [^.]*?[:\.]\s*",
-        
-        # PERBAIKAN BARU: Frasa "Mohon maaf..."
-        r"^[Mm]ohon maaf[^.]*?[:\.]\s*",
-        r"^[Mm]aaf[^.]*?[:\.]\s*",
-        
-        # PERBAIKAN BARU: Frasa "Saya dapat/mampu..."
-        r"^[Ss]aya (?:dapat|bisa|mampu)[^.]*?memberikan[^.]*?[:\.]\s*",
-        r"^[Ss]ebagai [^.]*?saya (?:dapat|bisa|mampu)[^.]*?[:\.]\s*",
-        
-        # PERBAIKAN BARU: Frasa "Anda belum menyebutkan..."
-        r"^[Aa]nda belum menyebutkan[^.]*?[:\.]\s*",
-        r"^[Kk]arena Anda belum[^.]*?[:\.]\s*",
-        
-        # PERBAIKAN BARU: Frasa pembuka evaluasi yang umum
+        # Hanya pattern yang paling umum dan aman
+        r"^[Bb]erdasarkan (?:informasi|teks|sumber|data|referensi|catatan)[^.]*?[:\.]\s*",
+        r"^[Dd]ari (?:informasi|sumber|teks|data)[^.]*?[:\.]\s*",
+        r"^[Mm]enurut (?:informasi|sumber|teks)[^.]*?[:\.]\s*",
         r"^[Uu]ntuk menjawab pertanyaan ini[^.]*?[:\.]\s*",
         r"^[Mm]enjawab pertanyaan[^.]*?[:\.]\s*",
-        r"^[Jj]awaban untuk pertanyaan[^.]*?[:\.]\s*",
         r"^[Tt]erkait dengan pertanyaan[^.]*?[:\.]\s*",
-        r"^[Mm]engenai pertanyaan[^.]*?[:\.]\s*",
-        r"^[Uu]ntuk pertanyaan[^.]*?[:\.]\s*",
+        r"^[Jj]awaban untuk pertanyaan[^.]*?[:\.]\s*",
     ]
     
     cleaned = answer.strip()
     
-    # Terapkan semua pola pembersih (lakukan beberapa kali untuk pola bersarang)
-    for _ in range(3):  # Loop 3x untuk menangkap pola bersarang
-        for pattern in unwanted_patterns:
-            cleaned = re.sub(pattern, "", cleaned, flags=re.IGNORECASE).strip()
+    # DIPERBAIKI: Loop 1x saja, bukan 3x
+    for pattern in unwanted_patterns:
+        cleaned = re.sub(pattern, "", cleaned, flags=re.IGNORECASE).strip()
     
     # Deteksi overlap dengan jawaban sebelumnya
     if previous_answer and len(previous_answer) > 30:
@@ -333,6 +266,12 @@ def filter_relevant_documents(docs_with_meta: list, threshold: float = None) -> 
         if similarity >= threshold:
             filtered.append((doc, meta, distance, similarity))
     
+    # DIPERBAIKI: Jika tidak ada yang lolos threshold, ambil yang terbaik
+    if not filtered and docs_with_meta:
+        # Ambil dokumen dengan similarity tertinggi
+        best_doc = max(docs_with_meta, key=lambda x: 1 / (1 + x[2]))
+        filtered.append((*best_doc, 1 / (1 + best_doc[2])))
+    
     return filtered
 
 
@@ -380,11 +319,9 @@ def call_llm(prompt: str, max_tokens: int = None, timeout: int = None) -> tuple:
 
 def get_contextual_query(query: str) -> str:
     """Membuat query pencarian lebih kontekstual."""
-    # PERBAIKAN: Gunakan resolve_references untuk mendeteksi kata referensi
     enhanced_query = resolve_references(query)
     
-    # Jika query sangat pendek dan tidak ada referensi, gabungkan dengan query sebelumnya
-    if enhanced_query == query:  # Tidak ada referensi yang terdeteksi
+    if enhanced_query == query:
         words = query.split()
         if len(words) < 5 and conversation_history:
             last_query = conversation_history[-1].get("query", "")
@@ -409,10 +346,6 @@ def generate_response(query: str, ground_truth: str = "") -> tuple:
             False
         )
     
-    # PERBAIKAN KUNCI: Query Enhancement Pipeline
-    # 1. Resolve references (hal demikian, itu, tersebut)
-    # 2. Get contextual query (gabungkan dengan percakapan sebelumnya)
-    # 3. Expand query (tambahkan sinonim)
     enhanced_query = get_contextual_query(query)
     expanded_query = expand_query(enhanced_query)
     
@@ -422,7 +355,6 @@ def generate_response(query: str, ground_truth: str = "") -> tuple:
     
     relevant_docs = filter_relevant_documents(docs_with_meta)
     
-    # Bangun riwayat percakapan untuk konteks
     history_text = ""
     for turn in conversation_history:
         history_text += f"Pengguna: {turn['query']}\nAsisten: {turn['answer']}\n\n"
@@ -440,15 +372,14 @@ PERTANYAAN PASIEN:
 TUGAS:
 Jawab pertanyaan pasien secara langsung, jelas, dan empatik menggunakan pengetahuan umum Anda tentang kesehatan ibu dan anak.
 
-ATURAN PENTING:
-1. LANGSUNG mulai dengan jawaban - JANGAN pakai pembuka seperti "Berdasarkan...", "Namun, sebagai...", "Mohon maaf...", dll.
-2. JANGAN menyebut "sumber", "referensi", atau "teks".
-3. Gunakan bahasa Indonesia yang natural seperti dokter yang sedang berbicara dengan pasien.
-4. Pahami konteks percakapan sebelumnya untuk menjawab pertanyaan yang merujuk ke topik sebelumnya.
-5. Gunakan format poin (-) untuk daftar jika diperlukan.
-6. Untuk kondisi darurat, sarankan untuk segera ke Puskesmas Kuranji.
+ATURAN:
+1. Gunakan bahasa Indonesia yang natural seperti dokter yang sedang berbicara dengan pasien.
+2. Pahami konteks percakapan sebelumnya untuk menjawab pertanyaan yang merujuk ke topik sebelumnya.
+3. Gunakan format poin (-) untuk daftar jika diperlukan.
+4. Untuk kondisi darurat, sarankan untuk segera ke Puskesmas Kuranji.
+5. Berikan jawaban yang lengkap dan informatif.
 
-JAWABAN ANDA (langsung ke inti):"""
+JAWABAN ANDA:"""
         
         print("Menyusun jawaban (pengetahuan umum)...", end="\r")
         answer, is_truncated = call_llm(prompt)
@@ -485,13 +416,13 @@ JAWABAN ANDA (langsung ke inti):"""
     docs = [d[0] for d in relevant_docs]
     context = "\n\n---\n\n".join(docs)
     
-    if len(context) > 1500:
+    if len(context) > 2000:
         context = truncate_context(context)
     
-    # PERBAIKAN KUNCI: Prompt yang menekankan konteks percakapan
+    # DIPERBAIKI: Prompt yang lebih natural dan tidak terlalu ketat
     prompt = f"""Anda adalah dokter/bidan yang ramah sedang berbicara langsung dengan pasien.
 
-CATATAN MEDIS (untuk referensi internal Anda - JANGAN sebutkan ini ke pasien):
+CATATAN MEDIS (untuk referensi internal Anda):
 ---
 {context}
 ---
@@ -505,22 +436,16 @@ PERTANYAAN PASIEN SAAT INI:
 TUGAS ANDA:
 Jawab pertanyaan pasien secara langsung, jelas, dan empatik seperti dokter profesional.
 
-ATURAN SANGAT PENTING:
-1. PAHAMI KONTEKS PERCAKAPAN - Jika pasien menyebut "hal demikian", "itu", "tersebut", atau merujuk ke pertanyaan sebelumnya, gunakan konteks dari riwayat percakapan untuk memahami apa yang dimaksud.
-2. LANGSUNG mulai menjawab - JANGAN pakai frasa seperti:
-   - "Berdasarkan informasi..."
-   - "Namun, sebagai asisten..."
-   - "Mohon maaf..."
-   - "Anda belum menyebutkan..."
-   - "Dari sumber yang diberikan..."
-   - "Menurut catatan..."
-3. JANGAN PERNAH menyebut "sumber", "referensi", "catatan", atau "teks" dalam jawaban.
-4. Gunakan bahasa Indonesia yang natural dan mudah dipahami.
-5. Jika kondisi serius, sarankan untuk segera ke Puskesmas Kuranji.
-6. Gunakan format poin (-) untuk daftar jika perlu.
-7. Bersikaplah empatik dan profesional.
+ATURAN:
+1. PAHAMI KONTEKS PERCAKAPAN - Jika pasien menyebut "hal demikian", "itu", "tersebut", gunakan konteks dari riwayat percakapan.
+2. Gunakan informasi dari catatan medis untuk menjawab dengan akurat.
+3. Gunakan bahasa Indonesia yang natural dan mudah dipahami.
+4. Jika kondisi serius, sarankan untuk segera ke Puskesmas Kuranji.
+5. Gunakan format poin (-) untuk daftar jika perlu.
+6. Bersikaplah empatik dan profesional.
+7. Berikan jawaban yang lengkap dan informatif.
 
-JAWABAN ANDA KE PASIEN (langsung ke inti, tanpa pembuka):"""
+JAWABAN ANDA KE PASIEN:"""
     
     print("Menyusun jawaban...", end="\r")
     answer, is_truncated = call_llm(prompt)
@@ -578,16 +503,15 @@ JAWABAN YANG TERPOTONG (akhiran):
 
 TUGAS: Tulis 2-3 kalimat berikutnya yang nyambung secara tata bahasa.
 
-ATURAN WAJIB:
+ATURAN:
 1. LANGSUNG mulai dengan kata pertama kalimat baru.
-2. JANGAN tulis kata pembuka apapun (seperti "Berdasarkan...", "Jawaban lanjutan:", dll).
-3. JANGAN ulangi kalimat yang sudah ada.
+2. JANGAN ulangi kalimat yang sudah ada.
 
-CONTOH BENAR:
+CONTOH:
 Jika terpotong di: "...ibu hamil juga sering mengalami mual"
 Maka tulis: "Selain itu, rasa lelah berlebih juga umum dirasakan. Pastikan ibu tetap istirahat cukup."
 
-TULIS LANJUTANNYA SEKARANG (tanpa pembuka apapun):"""
+TULIS LANJUTANNYA:"""
 
     print("Melanjutkan jawaban...", end="\r")
     answer, is_truncated = call_llm(prompt)
@@ -705,7 +629,7 @@ def convert_csv_to_json():
 
 
 # ==============================
-# 8. MODE EVALUASI - DIPERBAIKI DENGAN PROMPT KETAT
+# 8. MODE EVALUASI - DIPERBAIKI
 # ==============================
 
 def run_evaluation():
@@ -755,30 +679,22 @@ def run_evaluation():
         relevant_docs = filter_relevant_documents(docs_with_meta)
         
         if not relevant_docs:
-            # PERBAIKAN: Prompt untuk pengetahuan umum yang sangat ketat
-            prompt = f"""Anda adalah asisten kesehatan ibu dan anak yang menjawab pertanyaan evaluasi.
+            # Fallback ke pengetahuan umum - DIPERBAIKI: Prompt lebih natural
+            prompt = f"""Anda adalah dokter/bidan yang ramah dan profesional.
 
 PERTANYAAN:
 {query}
 
 TUGAS:
-Jawab pertanyaan tersebut secara SINGKAT, PADAT, dan LANGSUNG KE INTI menggunakan pengetahuan umum Anda.
+Jawab pertanyaan tersebut menggunakan pengetahuan umum Anda tentang kesehatan ibu dan anak.
 
-ATURAN SANGAT KETAT:
-1. Jawab dalam 1-3 kalimat saja - JANGAN bertele-tele.
-2. LANGSUNG berikan jawaban - JANGAN pakai pembuka seperti "Berdasarkan...", "Untuk menjawab...", dll.
-3. Jika pertanyaan meminta angka/data spesifik, berikan angka tersebut langsung.
-4. JANGAN menambahkan penjelasan panjang lebar yang tidak diperlukan.
-5. Gunakan bahasa Indonesia yang jelas.
+ATURAN:
+1. Berikan jawaban yang lengkap dan informatif.
+2. Gunakan bahasa Indonesia yang jelas dan mudah dipahami.
+3. Jika pertanyaan meminta angka/data spesifik, berikan angka tersebut.
+4. Gunakan format poin (-) untuk daftar jika perlu.
 
-CONTOH BENAR:
-Pertanyaan: "Berapa kali minimal ibu hamil periksa?"
-Jawaban: "Minimal 6 kali selama kehamilan."
-
-CONTOH SALAH:
-"Untuk menjawab pertanyaan ini, berdasarkan pengetahuan umum, ibu hamil sebaiknya melakukan pemeriksaan kehamilan minimal 6 kali selama masa kehamilannya untuk memastikan kesehatan ibu dan janin."
-
-JAWABAN ANDA (singkat dan langsung):"""
+JAWABAN ANDA:"""
             answer, _ = call_llm(prompt)
             answer = clean_response(answer)
             docs = []
@@ -786,11 +702,11 @@ JAWABAN ANDA (singkat dan langsung):"""
         else:
             docs = [d[0] for d in relevant_docs]
             context = "\n\n---\n\n".join(docs)
-            if len(context) > 1500:
+            if len(context) > 2000:
                 context = truncate_context(context)
                 
-            # PERBAIKAN KUNCI: Prompt evaluasi yang sangat ketat
-            prompt = f"""Anda adalah asisten yang menjawab pertanyaan evaluasi berdasarkan dokumen yang diberikan.
+            # DIPERBAIKI: Prompt evaluasi yang lebih natural dan konsisten dengan mode chat
+            prompt = f"""Anda adalah dokter/bidan yang ramah dan profesional.
 
 DOKUMEN SUMBER:
 {context}
@@ -799,30 +715,17 @@ PERTANYAAN:
 {query}
 
 TUGAS:
-Jawab pertanyaan tersebut secara SINGKAT, PADAT, dan AKURAT berdasarkan dokumen di atas.
+Jawab pertanyaan tersebut secara akurat berdasarkan dokumen di atas.
 
-ATURAN SANGAT KETAT:
-1. Jawab dalam 1-3 kalimat saja - JANGAN bertele-tele.
-2. LANGSUNG berikan jawaban - JANGAN pakai pembuka seperti "Berdasarkan informasi...", "Dari sumber...", "Menurut dokumen...", dll.
-3. JANGAN menyebut "sumber", "dokumen", "informasi", atau "teks" dalam jawaban.
-4. Jika pertanyaan meminta angka/data spesifik (berapa kali, berapa persen, berapa kg, dll), KUTIP ANGKA TERSEBUT LANGSUNG dari dokumen.
-5. JANGAN melakukan generalisasi atau interpretasi - gunakan data persis dari dokumen.
-6. JANGAN menambahkan penjelasan panjang lebar yang tidak diperlukan.
-7. Jika dokumen tidak menjawab pertanyaan, katakan "Tidak ada informasi" dalam 1 kalimat.
+ATURAN:
+1. Gunakan informasi dari dokumen untuk menjawab dengan akurat.
+2. Jika pertanyaan meminta angka/data spesifik, kutip angka tersebut dari dokumen.
+3. Gunakan bahasa Indonesia yang jelas dan mudah dipahami.
+4. Berikan jawaban yang lengkap dan informatif.
+5. Gunakan format poin (-) untuk daftar jika perlu.
+6. Jika dokumen tidak menjawab pertanyaan, katakan dengan jujur.
 
-CONTOH BENAR:
-Pertanyaan: "Berapa kali minimal ibu hamil periksa?"
-Dokumen: "...pemeriksaan kehamilan dilakukan minimal sebanyak 6 kali..."
-Jawaban: "Minimal 6 kali selama kehamilan."
-
-Pertanyaan: "Berapa persen perkembangan otak saat lahir?"
-Dokumen: "...25% saat lahir..."
-Jawaban: "25% saat lahir."
-
-CONTOH SALAH:
-"Untuk menjawab pertanyaan ini, berdasarkan informasi yang diberikan dalam dokumen, ibu hamil sebaiknya melakukan pemeriksaan kehamilan minimal 6 kali selama masa kehamilannya di fasilitas kesehatan terdekat untuk memastikan kesehatan ibu dan janin."
-
-JAWABAN ANDA (singkat, langsung, tanpa pembuka):"""
+JAWABAN ANDA:"""
             answer, _ = call_llm(prompt)
             answer = clean_response(answer)
 
