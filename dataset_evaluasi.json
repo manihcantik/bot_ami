@@ -12,14 +12,6 @@
     "ground_truth": "Seribu hari pertama kehidupan (1000 HPK) adalah masa paling penting dalam pertumbuhan dan perkembangan anak. Masa ini terdiri dari 270 hari selama bayi berada dalam kandungan ibu, dan 730 hari atau dua tahun pertama kehidupan anak setelah dilahirkan."
   },
   {
-    "question": "Berapa persen perkembangan otak anak saat lahir?",
-    "ground_truth": "25% Saat Lahir."
-  },
-  {
-    "question": "Apa yang harus dilakukan jika ibu terlambat datang bulan 1 minggu?",
-    "ground_truth": "Segera periksa ke fasilitas pelayanan kesehatan, jika terlambat datang bulan 1 minggu."
-  },
-  {
     "question": "Berapa kali minimal ibu hamil harus periksa kehamilan ke dokter pada trimester 1?",
     "ground_truth": "Periksa kehamilan ke dokter paling sedikit satu kali, termasuk USG dan laboratorium lengkap."
   },
@@ -56,14 +48,6 @@
     "ground_truth": "Dengan mengikuti kelas ibu hamil, ibu bisa mempersiapkan tubuh dan mental untuk kelancaran proses melahirkan. Selain itu juga mendapatkan dukungan dari ibu-ibu lain, serta memperoleh informasi tentang kehamilan, proses melahirkan, perawatan masa nifas, perawatan bayi baru lahir, kebutuhan dan pemenuhan gizi serta pelayanan kesehatan yang diterima."
   },
   {
-    "question": "Apa saja yang harus dilakukan ibu hamil pada usia kehamilan 4-6 bulan (Trimester 2)?",
-    "ground_truth": "Periksa kehamilan ke dokter atau bidan paling sedikit dua kali. Pantau gerak bayi. Makan dengan porsi lebih kecil tapi sering, yang terbagi dalam 3 kali makanan utama ditambah dengan 1-2 kali makanan kudapan dalam sehari (lihat tabel porsi makan dan minum Ibu Hamil di bawah). Minum Tablet Tambah Darah (TTD)/Multivitamin setiap hari selama kehamilan. Kenali dan cek tanda bahaya (lihat halaman 17). Jika mengalami tanda bahaya, segera pergi ke fasilitas pelayanan kesehatan. Mulai merencanakan proses melahirkan atau kelahiran melalui diskusi dengan tenaga kesehatan."
-  },
-  {
-    "question": "Sebutkan tanda bahaya pada Trimester 2 yang mengharuskan ibu hamil segera dibawa periksa ke Puskesmas/Rumah Sakit.",
-    "ground_truth": "Demam Tinggi. Muntah darah. Napas pendek dan jantung berdebar kencang. Nyeri perut hebat. Pandangan kabur. Perdarahan. Perdarahan atau keluar cairan dari jalan lahir yang sangat banyak atau berbau. Pusing/sakit kepala berat. Sakit saat kencing atau keluar keputihan atau gatal di daerah kemaluan."
-  },
-  {
     "question": "Apa dampak gejolak emosi yang dialami ibu selama kehamilan terhadap ibu dan bayi?",
     "ground_truth": "Selama kehamilan Ibu dapat mengalami berbagai gejolak emosi, seperti mudah sedih, mudah marah, stres, cemas, dan depresi. Hal ini akan mempengaruhi kesehatan fisik dan emosi ibu hamil, serta perkembangan bayi dalam kandungannya."
   },
@@ -72,32 +56,16 @@
     "ground_truth": "Kesehatan jiwa yang baik selama kehamilan adalah kunci untuk proses melahirkan yang sehat, dan awal yang baik bagi kesehatan fisik maupun mental ibu dan bayi."
   },
   {
-    "question": "Berapa kali suami dianjurkan mengikuti Kelas Ibu Hamil, dan kepada siapa jadwal serta tempat pelaksanaannya bisa ditanyakan?",
-    "ground_truth": "Untuk jadwal dan tempat pelaksanaan Kelas ibu hamil tanyakan pada petugas kesehatan, dan minta suami mengikuti paling sedikit 1 kali."
-  },
-  {
     "question": "Apa yang dialami ibu pada usia kehamilan 4-6 bulan (Trimester 2), termasuk kenaikan berat badan dan gerak bayi?",
     "ground_truth": "Gejala yang dirasakan pada awal kehamilan mulai berkurang. Kenaikan berat badan sesuai dengan status gizi ibu sebelum hamil, yaitu sekitar 4 – 8 kg. Mulai merasakan gerak bayi, seperti menendang, pada usia kehamilan 5 bulan."
-  },
-  {
-    "question": "Bagaimana perkembangan bayi pada usia kehamilan Trimester 2, dari segi panjang dan berat badan?",
-    "ground_truth": "Fungsi organ dan tubuh bayi berkembang, dimana bayi akan tumbuh mulai dari panjang 12.5 cm atau kira-kira sebesar apel sampai 34 cm dan berat sekitar 1000 gram, atau kira-kira sebesar jagung di akhir bulan ke 6."
   },
   {
     "question": "Kapan sebaiknya persiapan melahirkan mulai dilakukan?",
     "ground_truth": "Demi kelancaran proses melahirkan, persiapan harus dilakukan jauh-jauh hari, yaitu mulai trimester kedua."
   },
   {
-    "question": "Apa yang harus dilakukan ibu hamil pada usia kehamilan 7-9 bulan (Trimester 3)?",
-    "ground_truth": "Periksa kehamilan paling sedikit tiga kali dan salah satunya harus oleh dokter, termasuk pemeriksaan USG dan laboratorium. Makan dengan porsi lebih kecil tapi sering, yang terbagi dalam 3 kali makanan utama ditambah dengan 1-2 kali makanan kudapan dalam sehari (lihat halaman 16) sama dengan trimester 2. Minum Tablet Tambah Darah (TTD)/Multivitamin setiap hari selama kehamilan. Kenali dan cek tanda bahaya (lihat halaman 20). Jika mengalami tanda bahaya, segera pergi ke fasilitas pelayanan kesehatan. Kenali tanda awal melahirkan dan tanda bahaya pada melahirkan. Pelajari proses melahirkan. Diskusikan dengan tenaga kesehatan metode KB yang akan dipilih. Pelajari pentingnya Inisiasi Menyusu Dini (IMD) dan pemberian Air Susu Ibu (ASI). Ketahui hal-hal penting terkait perawatan bayi baru lahir."
-  },
-  {
     "question": "Benarkah mitos bahwa minyak dan makanan pedas dapat mempercepat kelahiran?",
     "ground_truth": "Mitos ini tidak terbukti secara ilmiah ya, Bu. Yang terpenting adalah menjaga pola makan seimbang dan memenuhi kebutuhan gizi agar ibu dan bayi tetap sehat selama proses melahirkan."
-  },
-  {
-    "question": "Sebutkan tanda bahaya pada Trimester 3 yang mengharuskan ibu hamil segera dibawa periksa ke Puskesmas/Rumah Sakit.",
-    "ground_truth": "Gerakan bayi tidak ada/kurang dari 10 kali dalam 12 jam. Ketuban pecah namun tidak ada kontraksi. Nyeri perut hebat di antara kontraksi. Perdarahan hebat. Pusing/sakit kepala berat."
   },
   {
     "question": "Di fasilitas kesehatan mana proses melahirkan harus dilakukan, dan mengapa?",

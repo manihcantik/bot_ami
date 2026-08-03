@@ -14,47 +14,35 @@ from pathlib import Path
 from sentence_transformers import SentenceTransformer
 import chromadb
 
+# <--- DIUBAH: Import konfigurasi dari file config.py
+from config import (
+    PROJECT_ROOT, SCENARIO_NAME, CHUNK_SIZE, CHUNK_OVERLAP, TOP_K,
+    EMBEDDING_MODEL, DB_PATH, COLLECTION_NAME,
+    LM_API_URL, LLM_MODEL, TEMPERATURE, MAX_TOKENS, TIMEOUT_SECONDS,
+    MAX_HISTORY, LOG_FILE, DATASET_EVAL_FILE, CSV_INPUT_FILE, RELEVANCE_THRESHOLD
+)
+
 os.environ["HF_HUB_DISABLE_TELEMETRY"] = "1"
 os.environ["TRANSFORMERS_VERBOSITY"] = "error"
 warnings.filterwarnings("ignore")
 
 # ==============================
-# 2. KONFIGURASI
+# 2. INISIALISASI GLOBAL
 # ==============================
-TOP_K = 3
-PROJECT_ROOT = Path(__file__).resolve().parent
-
-EMBEDDING_MODEL = "BAAI/bge-m3"
-DB_PATH = "./chroma_db"
-COLLECTION_NAME = "docs"
-LM_API_URL = "http://127.0.0.1:1234/v1/chat/completions"
-LLM_MODEL = "google/gemma-4-e2b"
-TEMPERATURE = 0.2
-MAX_HISTORY = 3
-LOG_FILE = "chatbot_logs.jsonl"
-MAX_TOKENS = 4096
-TIMEOUT_SECONDS = 180
-DATASET_EVAL_FILE = PROJECT_ROOT / "dataset_evaluasi.json"
-CSV_INPUT_FILE = PROJECT_ROOT / "data_manual.csv"
-RELEVANCE_THRESHOLD = 0.25  # DIPERBAIKI: Turunkan dari 0.35 ke 0.25
-
-# ==============================
-# 3. INISIALISASI GLOBAL
-# ==============================
-print("[1/3] Loading embedding model...")
+print(f"[1/3] Loading embedding model ({EMBEDDING_MODEL})...")
 embedder = SentenceTransformer(EMBEDDING_MODEL)
 
-print("[2/3] Menghubungkan ke ChromaDB...")
+print(f"[2/3] Menghubungkan ke ChromaDB di {DB_PATH}...")
 client = chromadb.PersistentClient(path=DB_PATH)
 collection = client.get_or_create_collection(name=COLLECTION_NAME)
 
 print("[3/3] Menyiapkan memori percakapan...")
 conversation_history = deque(maxlen=MAX_HISTORY)
 
-print("\nChatbot siap digunakan!\n")
+print(f"\nChatbot siap digunakan! (Skenario: {SCENARIO_NAME})\n")
 
 # ==============================
-# 4. FUNGSI HELPER
+# 3. FUNGSI HELPER
 # ==============================
 
 def log_interaction(
@@ -68,6 +56,7 @@ def log_interaction(
     """Simpan interaksi ke file log untuk evaluasi."""
     entry = {
         "timestamp": datetime.now().isoformat(),
+        "scenario": SCENARIO_NAME, # <--- TAMBAHAN: Mencatat skenario mana yang digunakan
         "query": query,
         "answer": answer,
         "contexts": contexts or [],
@@ -104,7 +93,6 @@ def detect_intent(query: str) -> dict:
 
 def truncate_context(context: str, max_chars: int = 2000) -> str:
     """Potong konteks di akhir kalimat terakhir agar tidak memotong kata."""
-    # DIPERBAIKI: Naikkan max_chars dari 1500 ke 2000
     if len(context) <= max_chars:
         return context
     
@@ -120,7 +108,6 @@ def expand_query(query: str) -> str:
     """Memperluas query pendek dengan sinonim/kata kunci terkait."""
     q = query.lower()
     
-    # DIPERBAIKI: Tambahkan mapping untuk pertanyaan numerik/spesifik
     expansions = {
         "hamil": ["kehamilan", "ibu hamil", "trimester", "janin", "gravida"],
         "ciri": ["gejala", "tanda", "keluhan", "simtom"],
@@ -133,7 +120,6 @@ def expand_query(query: str) -> str:
         "gugur": ["miscarriage", "keguguran", "abortus"],
         "kontrasepsi": ["kb", "keluarga berencana", "pil kb"],
         "darah": ["pendarahan", "bleeding", "flek"],
-        # TAMBAHAN BARU: Pertanyaan numerik dan spesifik
         "berat": ["berat badan", "bb", "weight", "kenaikan", "massa"],
         "otak": ["perkembangan otak", "brain", "neural", "kognitif"],
         "persen": ["persentase", "presentase", "%", "prosentase", "proporsi"],
@@ -160,9 +146,7 @@ def expand_query(query: str) -> str:
 
 
 def resolve_references(query: str) -> str:
-    """
-    Deteksi kata referensi dan gabungkan dengan konteks sebelumnya.
-    """
+    """Deteksi kata referensi dan gabungkan dengan konteks sebelumnya."""
     q = query.lower().strip()
     
     reference_words = [
@@ -194,9 +178,7 @@ def clean_response(answer: str, previous_answer: str = "") -> str:
     if not answer:
         return answer
     
-    # DIPERBAIKI: Kurangi jumlah pattern dan loop
     unwanted_patterns = [
-        # Hanya pattern yang paling umum dan aman
         r"^[Bb]erdasarkan (?:informasi|teks|sumber|data|referensi|catatan)[^.]*?[:\.]\s*",
         r"^[Dd]ari (?:informasi|sumber|teks|data)[^.]*?[:\.]\s*",
         r"^[Mm]enurut (?:informasi|sumber|teks)[^.]*?[:\.]\s*",
@@ -208,11 +190,9 @@ def clean_response(answer: str, previous_answer: str = "") -> str:
     
     cleaned = answer.strip()
     
-    # DIPERBAIKI: Loop 1x saja, bukan 3x
     for pattern in unwanted_patterns:
         cleaned = re.sub(pattern, "", cleaned, flags=re.IGNORECASE).strip()
     
-    # Deteksi overlap dengan jawaban sebelumnya
     if previous_answer and len(previous_answer) > 30:
         prev_sentences = re.split(r'(?<=[.!?])\s+', previous_answer)
         prev_tail = " ".join(prev_sentences[-3:]).strip()
@@ -230,11 +210,14 @@ def clean_response(answer: str, previous_answer: str = "") -> str:
 
 
 # ==============================
-# 5. FUNGSI CORE: RETRIEVAL & GENERATION
+# 4. FUNGSI CORE: RETRIEVAL & GENERATION
 # ==============================
 
-def search_documents(query: str, n_results: int = 3):
+def search_documents(query: str, n_results: int = None):
     """Cari dokumen relevan dari ChromaDB."""
+    if n_results is None:
+        n_results = TOP_K * 2 # <--- DIUBAH: Menggunakan TOP_K dari config
+        
     try:
         query_embedding = embedder.encode(query).tolist()
         
@@ -258,7 +241,7 @@ def search_documents(query: str, n_results: int = 3):
 def filter_relevant_documents(docs_with_meta: list, threshold: float = None) -> list:
     """Filter dokumen berdasarkan similarity score."""
     if threshold is None:
-        threshold = RELEVANCE_THRESHOLD
+        threshold = RELEVANCE_THRESHOLD # <--- DIUBAH: Menggunakan threshold dari config
     
     filtered = []
     for doc, meta, distance in docs_with_meta:
@@ -266,9 +249,7 @@ def filter_relevant_documents(docs_with_meta: list, threshold: float = None) -> 
         if similarity >= threshold:
             filtered.append((doc, meta, distance, similarity))
     
-    # DIPERBAIKI: Jika tidak ada yang lolos threshold, ambil yang terbaik
     if not filtered and docs_with_meta:
-        # Ambil dokumen dengan similarity tertinggi
         best_doc = max(docs_with_meta, key=lambda x: 1 / (1 + x[2]))
         filtered.append((*best_doc, 1 / (1 + best_doc[2])))
     
@@ -277,16 +258,16 @@ def filter_relevant_documents(docs_with_meta: list, threshold: float = None) -> 
 
 def call_llm(prompt: str, max_tokens: int = None, timeout: int = None) -> tuple:
     """Kirim prompt ke LM Studio API."""
-    max_tokens = max_tokens or MAX_TOKENS
-    timeout = timeout or TIMEOUT_SECONDS
+    max_tokens = max_tokens or MAX_TOKENS # <--- DIUBAH
+    timeout = timeout or TIMEOUT_SECONDS  # <--- DIUBAH
     
     try:
         response = requests.post(
-            LM_API_URL,
+            LM_API_URL, # <--- DIUBAH
             json={
-                "model": LLM_MODEL,
+                "model": LLM_MODEL, # <--- DIUBAH
                 "messages": [{"role": "user", "content": prompt}],
-                "temperature": TEMPERATURE,
+                "temperature": TEMPERATURE, # <--- DIUBAH
                 "max_tokens": max_tokens
             },
             timeout=timeout,
@@ -312,7 +293,7 @@ def call_llm(prompt: str, max_tokens: int = None, timeout: int = None) -> tuple:
     except requests.exceptions.Timeout:
         return "[Error] Timeout: Coba pertanyaan yang lebih singkat.", False
     except requests.exceptions.ConnectionError:
-        return "[Error] Pastikan LM Studio berjalan di http://127.0.0.1:1234", False
+        return f"[Error] Pastikan LM Studio berjalan di {LM_API_URL}", False # <--- DIUBAH agar dinamis
     except Exception as e:
         return f"[Error] {type(e).__name__}: {e}", False
 
@@ -350,7 +331,7 @@ def generate_response(query: str, ground_truth: str = "") -> tuple:
     expanded_query = expand_query(enhanced_query)
     
     print(f"Mencari referensi...", end="\r")
-    docs_with_meta = search_documents(expanded_query, n_results=TOP_K * 2)
+    docs_with_meta = search_documents(expanded_query) # Menggunakan default TOP_K * 2
     print(" " * 40, end="\r")
     
     relevant_docs = filter_relevant_documents(docs_with_meta)
@@ -360,7 +341,6 @@ def generate_response(query: str, ground_truth: str = "") -> tuple:
         history_text += f"Pengguna: {turn['query']}\nAsisten: {turn['answer']}\n\n"
     
     if not relevant_docs:
-        # Fallback ke pengetahuan umum
         prompt = f"""Anda adalah dokter/bidan yang ramah dan profesional.
 
 RIWAYAT PERCAKAPAN:
@@ -419,7 +399,6 @@ JAWABAN ANDA:"""
     if len(context) > 2000:
         context = truncate_context(context)
     
-    # DIPERBAIKI: Prompt yang lebih natural dan tidak terlalu ketat
     prompt = f"""Anda adalah dokter/bidan yang ramah sedang berbicara langsung dengan pasien.
 
 CATATAN MEDIS (untuk referensi internal Anda):
@@ -539,7 +518,7 @@ TULIS LANJUTANNYA:"""
 
 
 # ==============================
-# 6. UTILITAS
+# 5. UTILITAS
 # ==============================
 
 def add_document(doc_id: str, text: str, metadata: dict = None) -> bool:
@@ -580,7 +559,7 @@ def show_logs(n: int = 5):
 
 
 # ==============================
-# 7. MODE KONVERSI CSV KE JSON
+# 6. MODE KONVERSI CSV KE JSON
 # ==============================
 
 def convert_csv_to_json():
@@ -629,13 +608,13 @@ def convert_csv_to_json():
 
 
 # ==============================
-# 8. MODE EVALUASI - DIPERBAIKI
+# 7. MODE EVALUASI
 # ==============================
 
 def run_evaluation():
     """Menjalankan chatbot secara otomatis menggunakan dataset evaluasi."""
     print("\n" + "="*60)
-    print("MEMULAI MODE EVALUASI RAG")
+    print(f"MEMULAI MODE EVALUASI RAG (Skenario: {SCENARIO_NAME})") # <--- DIUBAH
     print("="*60)
 
     if not DATASET_EVAL_FILE.exists():
@@ -675,11 +654,10 @@ def run_evaluation():
             continue
 
         expanded_query = expand_query(query)
-        docs_with_meta = search_documents(expanded_query, n_results=TOP_K * 2)
+        docs_with_meta = search_documents(expanded_query) # Menggunakan default TOP_K * 2
         relevant_docs = filter_relevant_documents(docs_with_meta)
         
         if not relevant_docs:
-            # Fallback ke pengetahuan umum - DIPERBAIKI: Prompt lebih natural
             prompt = f"""Anda adalah dokter/bidan yang ramah dan profesional.
 
 PERTANYAAN:
@@ -705,7 +683,6 @@ JAWABAN ANDA:"""
             if len(context) > 2000:
                 context = truncate_context(context)
                 
-            # DIPERBAIKI: Prompt evaluasi yang lebih natural dan konsisten dengan mode chat
             prompt = f"""Anda adalah dokter/bidan yang ramah dan profesional.
 
 DOKUMEN SUMBER:
@@ -748,13 +725,14 @@ JAWABAN ANDA:"""
 
 
 # ==============================
-# 9. MAIN LOOP
+# 8. MAIN LOOP
 # ==============================
 
 def main():
     """Entry point aplikasi chatbot."""
     print("=" * 60)
     print("CHATBOT EDUKASI KESEHATAN IBU DAN ANAK")
+    print(f"Skenario Aktif: {SCENARIO_NAME}") # <--- DIUBAH
     print("=" * 60)
     print("Perintah khusus:")
     print("  /exit     -> Keluar dari chatbot")
@@ -817,7 +795,7 @@ def main():
 
 
 # ==============================
-# 10. ENTRY POINT DENGAN ARGUMEN
+# 9. ENTRY POINT DENGAN ARGUMEN
 # ==============================
 
 if __name__ == "__main__":
