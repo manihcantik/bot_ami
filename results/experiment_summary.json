@@ -1,0 +1,101 @@
+{
+  "S1": {
+    "scenario": "S1",
+    "config": {
+      "chunk_size": 300,
+      "overlap": 50,
+      "top_k": 3,
+      "desc": "Chunk kecil, k kecil"
+    },
+    "chunk_file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\hasil_chunking\\scenario_S1\\kia_chunks_S1.json",
+    "chroma_dir": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\chroma_db\\chroma_S1"
+  },
+  "S2": {
+    "scenario": "S2",
+    "config": {
+      "chunk_size": 300,
+      "overlap": 50,
+      "top_k": 5,
+      "desc": "Chunk kecil, k sedang"
+    },
+    "chunk_file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\hasil_chunking\\scenario_S2\\kia_chunks_S2.json",
+    "chroma_dir": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\chroma_db\\chroma_S2"
+  },
+  "S3": {
+    "scenario": "S3",
+    "config": {
+      "chunk_size": 300,
+      "overlap": 50,
+      "top_k": 7,
+      "desc": "Chunk kecil, k besar"
+    },
+    "chunk_file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\hasil_chunking\\scenario_S3\\kia_chunks_S3.json",
+    "chroma_dir": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\chroma_db\\chroma_S3"
+  },
+  "S4": {
+    "scenario": "S4",
+    "config": {
+      "chunk_size": 500,
+      "overlap": 50,
+      "top_k": 3,
+      "desc": "Chunk sedang, k kecil"
+    },
+    "chunk_file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\hasil_chunking\\scenario_S4\\kia_chunks_S4.json",
+    "chroma_dir": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\chroma_db\\chroma_S4"
+  },
+  "S5": {
+    "scenario": "S5",
+    "config": {
+      "chunk_size": 500,
+      "overlap": 50,
+      "top_k": 5,
+      "desc": "Chunk sedang, k sedang"
+    },
+    "chunk_file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\hasil_chunking\\scenario_S5\\kia_chunks_S5.json",
+    "chroma_dir": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\chroma_db\\chroma_S5"
+  },
+  "S6": {
+    "scenario": "S6",
+    "config": {
+      "chunk_size": 500,
+      "overlap": 50,
+      "top_k": 7,
+      "desc": "Chunk sedang, k besar"
+    },
+    "chunk_file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\hasil_chunking\\scenario_S6\\kia_chunks_S6.json",
+    "chroma_dir": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\chroma_db\\chroma_S6"
+  },
+  "S7": {
+    "scenario": "S7",
+    "config": {
+      "chunk_size": 700,
+      "overlap": 50,
+      "top_k": 3,
+      "desc": "Chunk besar, k kecil"
+    },
+    "chunk_file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\hasil_chunking\\scenario_S7\\kia_chunks_S7.json",
+    "chroma_dir": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\chroma_db\\chroma_S7"
+  },
+  "S8": {
+    "scenario": "S8",
+    "config": {
+      "chunk_size": 700,
+      "overlap": 50,
+      "top_k": 5,
+      "desc": "Chunk besar, k sedang"
+    },
+    "chunk_file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\hasil_chunking\\scenario_S8\\kia_chunks_S8.json",
+    "chroma_dir": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\chroma_db\\chroma_S8"
+  },
+  "S9": {
+    "scenario": "S9",
+    "config": {
+      "chunk_size": 700,
+      "overlap": 50,
+      "top_k": 7,
+      "desc": "Chunk besar, k besar"
+    },
+    "chunk_file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\hasil_chunking\\scenario_S9\\kia_chunks_S9.json",
+    "chroma_dir": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\chroma_db\\chroma_S9"
+  }
+}

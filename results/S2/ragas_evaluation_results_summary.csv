@@ -1,0 +1,10 @@
+﻿metric,average_score,evaluated_records,evaluation_scope
+faithfulness,0.8358,31,RAG
+answer_relevancy,0.7881,31,RAG
+context_precision,0.6288,31,RAG
+context_recall,0.7226,31,RAG
+guardrail_feedback_relevancy,0.4317,19,Guardrail
+total_questions,50.0,50,ALL
+rag_questions,31.0,31,RAG
+guardrail_questions,19.0,19,Guardrail
+guardrail_detected_logged,19.0,19,Guardrail

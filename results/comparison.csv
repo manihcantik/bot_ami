@@ -1,0 +1,10 @@
+Scenario,Chunk Size,Overlap,Top-K,Description,Total Chunks,Avg Chunk Length,Status
+S1,300,50,3,"Chunk kecil, k kecil",715,255.97,OK
+S2,300,50,5,"Chunk kecil, k sedang",715,255.97,OK
+S3,300,50,7,"Chunk kecil, k besar",715,255.97,OK
+S4,500,50,3,"Chunk sedang, k kecil",438,386.4,OK
+S5,500,50,5,"Chunk sedang, k sedang",438,386.4,OK
+S6,500,50,7,"Chunk sedang, k besar",438,386.4,OK
+S7,700,50,3,"Chunk besar, k kecil",326,502.72,OK
+S8,700,50,5,"Chunk besar, k sedang",326,502.72,OK
+S9,700,50,7,"Chunk besar, k besar",326,502.72,OK

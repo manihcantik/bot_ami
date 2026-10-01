@@ -1,0 +1,16 @@
+[
+  {
+    "title": "Kehamilan - Umum",
+    "content": "[HALAMAN 1]\n[HALAMAN 2]\n[HALAMAN 3]\n[HALAMAN 4]\n[HALAMAN 5]\n[HALAMAN 6]\n[HALAMAN 7]\n[HALAMAN 8]\n[HALAMAN 9]\n[HALAMAN 10]\n[HALAMAN 11]\n[HALAMAN 12]\n[HALAMAN 13]\n[HALAMAN 14]\n[HALAMAN 15]\n[HALAMAN 16]\n[HALAMAN 17]\n[HALAMAN 18]\n[HALAMAN 19]\n[HALAMAN 20]\n[HALAMAN 21]",
+    "category": "kehamilan",
+    "sub_category": "kehamilan_umum",
+    "type": "edukasi",
+    "content_type": "edukasi",
+    "start_page": 1,
+    "keywords": [
+      "document"
+    ],
+    "priority": "umum",
+    "source": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\sumber_data\\Pengenalan Perubahan Fisiologi dan Tanda Bahaya pada Ibu Hamil dan Ibu Nifas.pdf"
+  }
+]

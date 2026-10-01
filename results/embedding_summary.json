@@ -1,0 +1,1370 @@
+{
+  "S1": {
+    "scenario": "S1",
+    "chunk_size": 300,
+    "overlap": 50,
+    "top_k": 3,
+    "input_dir": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S1",
+    "input_json_count": 35,
+    "chroma_path": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\vectorstore\\S1",
+    "document_count": 9851,
+    "files": [
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S1\\01_(revisi_2)_A5_Pedoman_Pelayanan_Antenatal,_Persalinan,_Nifas,_dan_BBL_di_Era_Adaptasi_Kebiasaan_Baru_chunks.json",
+        "document_count": 322
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S1\\02_05_Kebijakan_dan_Strategi_-_Pencegahan_dan_Penanggulangan_Kelainan_Bawaan_chunks.json",
+        "document_count": 468
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S1\\03_2021kepmenkes4631_chunks.json",
+        "document_count": 133
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S1\\04_587089-buku-ajar-kehamilan-8ad06edb_chunks.json",
+        "document_count": 1456
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S1\\05_buku_KIA_khusus_bayi_kecil_chunks.json",
+        "document_count": 135
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S1\\06_Buku_Saku_Kehamilan_Sehat_(1)_chunks.json",
+        "document_count": 164
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S1\\07_Buku_Saku_Kehamilan_Sehat_chunks.json",
+        "document_count": 164
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S1\\08_Buku_Saku_Kesehatan_Reproduksi_Catin_chunks.json",
+        "document_count": 264
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S1\\09_Buku_Saku_Pemberian_Makan_Bayi_dan_Anak_(PMBA)_untuk_Kader_chunks.json",
+        "document_count": 170
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S1\\10_Buku_Saku_Pencegahan_Anemia_pada_Ibu_Hamil_dan_Remaja_Putri_chunks.json",
+        "document_count": 242
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S1\\11_Buku_Saku_Pencegahan_dan_Tata_Laksana_Gizi_Buruk_Pada_Balita_di_Layanan_Rawat_Jalan_Bagi_Tenaga_Kesehatan_chunks.json",
+        "document_count": 642
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S1\\12_Buku_KIA_2024_(1)_chunks.json",
+        "document_count": 715
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S1\\13_BukuPanduanMakananBergiziSeimbangdanPengukuranStatusGiziIbuHamil_chunks.json",
+        "document_count": 67
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S1\\14_ISBN_Buku_Saku_Kader_(1)_chunks.json",
+        "document_count": 239
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S1\\15_Kemenkes_RI_Juknis_Pemantauan_Praktik_MP-ASI_chunks.json",
+        "document_count": 661
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S1\\16_Kurikulum_dan_Modul_Pelatihan_Pencegahan_dan_Tata_Laksana_Gizi_Buruk_Pada_Balita_Buku_3_Tahun_2020_chunks.json",
+        "document_count": 15
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S1\\17_Modul_Orientasi_Kader_Posyandu_chunks.json",
+        "document_count": 457
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S1\\18_pdf-link-buku-pedoman-imunisasi-2024_chunks.json",
+        "document_count": 102
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S1\\19_Pedoman_Aktivitas_Fisik_dan_Senam_Hamil_chunks.json",
+        "document_count": 53
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S1\\20_Pedoman_Bagi_Ibu_Hamil,_Ibu_Nifas,_dan_Bayi_Baru_Lahir_Selama_Social_Distancing_chunks.json",
+        "document_count": 87
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S1\\21_Pedoman_Deteksi_Risiko_Tinggi_Kehamilan_chunks.json",
+        "document_count": 3
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S1\\22_Pedoman_Dukungan_Keluarga_chunks.json",
+        "document_count": 377
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S1\\23_Pedoman_Gizi_Ibu_Hamil_chunks.json",
+        "document_count": 765
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S1\\24_PEDOMAN_PELAYANAN_ANTENATAL_TERPADU_Edisi_Ketiga_2020_chunks.json",
+        "document_count": 488
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S1\\25_PEDOMAN_PEMANTAUAN_PERTUMBUHAN_chunks.json",
+        "document_count": 4
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S1\\26_Pedoman_Pencegahan_Anemia_Ibu_Hamil_chunks.json",
+        "document_count": 224
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S1\\27_PEDOMAN_PENCEGAHAN_DAN_TATALAKSANA_GIZI_BURUK_PADA_BALITA_chunks.json",
+        "document_count": 7
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S1\\28_Pedoman_Tablet_Tambah_Darah_chunks.json",
+        "document_count": 162
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S1\\29_Pedoman-Pelaksanaan-Kelas-Ibu-Hamil_chunks.json",
+        "document_count": 182
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S1\\30_Pengenalan_Perubahan_Fisiologi_dan_Tanda_Bahaya_pada_Ibu_Hamil_dan_Ibu_Nifas_chunks.json",
+        "document_count": 1
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S1\\31_Penyelenggaraan_Upaya_Kesehatan_Reproduksi_chunks.json",
+        "document_count": 311
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S1\\32_PGS_Ibu_Hamil_dan_Ibu_Menyusui_-_Merge-1_chunks.json",
+        "document_count": 765
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S1\\33_Standar_antropometri_anak_chunks.json",
+        "document_count": 4
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S1\\34_Standar_Antropometri_dan_Deteksi_Dini_Perkembangan_Anak_chunks.json",
+        "document_count": 2
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S1\\35_Suplemen_Zat_Gizi_Mikro_Ibu_Hamil_chunks.json",
+        "document_count": 0
+      }
+    ]
+  },
+  "S2": {
+    "scenario": "S2",
+    "chunk_size": 300,
+    "overlap": 50,
+    "top_k": 5,
+    "input_dir": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S2",
+    "input_json_count": 35,
+    "chroma_path": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\vectorstore\\S2",
+    "document_count": 9851,
+    "files": [
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S2\\01_(revisi_2)_A5_Pedoman_Pelayanan_Antenatal,_Persalinan,_Nifas,_dan_BBL_di_Era_Adaptasi_Kebiasaan_Baru_chunks.json",
+        "document_count": 322
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S2\\02_05_Kebijakan_dan_Strategi_-_Pencegahan_dan_Penanggulangan_Kelainan_Bawaan_chunks.json",
+        "document_count": 468
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S2\\03_2021kepmenkes4631_chunks.json",
+        "document_count": 133
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S2\\04_587089-buku-ajar-kehamilan-8ad06edb_chunks.json",
+        "document_count": 1456
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S2\\05_buku_KIA_khusus_bayi_kecil_chunks.json",
+        "document_count": 135
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S2\\06_Buku_Saku_Kehamilan_Sehat_(1)_chunks.json",
+        "document_count": 164
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S2\\07_Buku_Saku_Kehamilan_Sehat_chunks.json",
+        "document_count": 164
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S2\\08_Buku_Saku_Kesehatan_Reproduksi_Catin_chunks.json",
+        "document_count": 264
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S2\\09_Buku_Saku_Pemberian_Makan_Bayi_dan_Anak_(PMBA)_untuk_Kader_chunks.json",
+        "document_count": 170
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S2\\10_Buku_Saku_Pencegahan_Anemia_pada_Ibu_Hamil_dan_Remaja_Putri_chunks.json",
+        "document_count": 242
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S2\\11_Buku_Saku_Pencegahan_dan_Tata_Laksana_Gizi_Buruk_Pada_Balita_di_Layanan_Rawat_Jalan_Bagi_Tenaga_Kesehatan_chunks.json",
+        "document_count": 642
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S2\\12_Buku_KIA_2024_(1)_chunks.json",
+        "document_count": 715
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S2\\13_BukuPanduanMakananBergiziSeimbangdanPengukuranStatusGiziIbuHamil_chunks.json",
+        "document_count": 67
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S2\\14_ISBN_Buku_Saku_Kader_(1)_chunks.json",
+        "document_count": 239
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S2\\15_Kemenkes_RI_Juknis_Pemantauan_Praktik_MP-ASI_chunks.json",
+        "document_count": 661
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S2\\16_Kurikulum_dan_Modul_Pelatihan_Pencegahan_dan_Tata_Laksana_Gizi_Buruk_Pada_Balita_Buku_3_Tahun_2020_chunks.json",
+        "document_count": 15
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S2\\17_Modul_Orientasi_Kader_Posyandu_chunks.json",
+        "document_count": 457
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S2\\18_pdf-link-buku-pedoman-imunisasi-2024_chunks.json",
+        "document_count": 102
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S2\\19_Pedoman_Aktivitas_Fisik_dan_Senam_Hamil_chunks.json",
+        "document_count": 53
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S2\\20_Pedoman_Bagi_Ibu_Hamil,_Ibu_Nifas,_dan_Bayi_Baru_Lahir_Selama_Social_Distancing_chunks.json",
+        "document_count": 87
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S2\\21_Pedoman_Deteksi_Risiko_Tinggi_Kehamilan_chunks.json",
+        "document_count": 3
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S2\\22_Pedoman_Dukungan_Keluarga_chunks.json",
+        "document_count": 377
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S2\\23_Pedoman_Gizi_Ibu_Hamil_chunks.json",
+        "document_count": 765
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S2\\24_PEDOMAN_PELAYANAN_ANTENATAL_TERPADU_Edisi_Ketiga_2020_chunks.json",
+        "document_count": 488
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S2\\25_PEDOMAN_PEMANTAUAN_PERTUMBUHAN_chunks.json",
+        "document_count": 4
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S2\\26_Pedoman_Pencegahan_Anemia_Ibu_Hamil_chunks.json",
+        "document_count": 224
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S2\\27_PEDOMAN_PENCEGAHAN_DAN_TATALAKSANA_GIZI_BURUK_PADA_BALITA_chunks.json",
+        "document_count": 7
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S2\\28_Pedoman_Tablet_Tambah_Darah_chunks.json",
+        "document_count": 162
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S2\\29_Pedoman-Pelaksanaan-Kelas-Ibu-Hamil_chunks.json",
+        "document_count": 182
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S2\\30_Pengenalan_Perubahan_Fisiologi_dan_Tanda_Bahaya_pada_Ibu_Hamil_dan_Ibu_Nifas_chunks.json",
+        "document_count": 1
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S2\\31_Penyelenggaraan_Upaya_Kesehatan_Reproduksi_chunks.json",
+        "document_count": 311
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S2\\32_PGS_Ibu_Hamil_dan_Ibu_Menyusui_-_Merge-1_chunks.json",
+        "document_count": 765
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S2\\33_Standar_antropometri_anak_chunks.json",
+        "document_count": 4
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S2\\34_Standar_Antropometri_dan_Deteksi_Dini_Perkembangan_Anak_chunks.json",
+        "document_count": 2
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S2\\35_Suplemen_Zat_Gizi_Mikro_Ibu_Hamil_chunks.json",
+        "document_count": 0
+      }
+    ]
+  },
+  "S3": {
+    "scenario": "S3",
+    "chunk_size": 300,
+    "overlap": 50,
+    "top_k": 7,
+    "input_dir": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S3",
+    "input_json_count": 35,
+    "chroma_path": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\vectorstore\\S3",
+    "document_count": 9851,
+    "files": [
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S3\\01_(revisi_2)_A5_Pedoman_Pelayanan_Antenatal,_Persalinan,_Nifas,_dan_BBL_di_Era_Adaptasi_Kebiasaan_Baru_chunks.json",
+        "document_count": 322
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S3\\02_05_Kebijakan_dan_Strategi_-_Pencegahan_dan_Penanggulangan_Kelainan_Bawaan_chunks.json",
+        "document_count": 468
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S3\\03_2021kepmenkes4631_chunks.json",
+        "document_count": 133
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S3\\04_587089-buku-ajar-kehamilan-8ad06edb_chunks.json",
+        "document_count": 1456
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S3\\05_buku_KIA_khusus_bayi_kecil_chunks.json",
+        "document_count": 135
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S3\\06_Buku_Saku_Kehamilan_Sehat_(1)_chunks.json",
+        "document_count": 164
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S3\\07_Buku_Saku_Kehamilan_Sehat_chunks.json",
+        "document_count": 164
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S3\\08_Buku_Saku_Kesehatan_Reproduksi_Catin_chunks.json",
+        "document_count": 264
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S3\\09_Buku_Saku_Pemberian_Makan_Bayi_dan_Anak_(PMBA)_untuk_Kader_chunks.json",
+        "document_count": 170
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S3\\10_Buku_Saku_Pencegahan_Anemia_pada_Ibu_Hamil_dan_Remaja_Putri_chunks.json",
+        "document_count": 242
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S3\\11_Buku_Saku_Pencegahan_dan_Tata_Laksana_Gizi_Buruk_Pada_Balita_di_Layanan_Rawat_Jalan_Bagi_Tenaga_Kesehatan_chunks.json",
+        "document_count": 642
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S3\\12_Buku_KIA_2024_(1)_chunks.json",
+        "document_count": 715
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S3\\13_BukuPanduanMakananBergiziSeimbangdanPengukuranStatusGiziIbuHamil_chunks.json",
+        "document_count": 67
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S3\\14_ISBN_Buku_Saku_Kader_(1)_chunks.json",
+        "document_count": 239
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S3\\15_Kemenkes_RI_Juknis_Pemantauan_Praktik_MP-ASI_chunks.json",
+        "document_count": 661
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S3\\16_Kurikulum_dan_Modul_Pelatihan_Pencegahan_dan_Tata_Laksana_Gizi_Buruk_Pada_Balita_Buku_3_Tahun_2020_chunks.json",
+        "document_count": 15
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S3\\17_Modul_Orientasi_Kader_Posyandu_chunks.json",
+        "document_count": 457
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S3\\18_pdf-link-buku-pedoman-imunisasi-2024_chunks.json",
+        "document_count": 102
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S3\\19_Pedoman_Aktivitas_Fisik_dan_Senam_Hamil_chunks.json",
+        "document_count": 53
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S3\\20_Pedoman_Bagi_Ibu_Hamil,_Ibu_Nifas,_dan_Bayi_Baru_Lahir_Selama_Social_Distancing_chunks.json",
+        "document_count": 87
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S3\\21_Pedoman_Deteksi_Risiko_Tinggi_Kehamilan_chunks.json",
+        "document_count": 3
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S3\\22_Pedoman_Dukungan_Keluarga_chunks.json",
+        "document_count": 377
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S3\\23_Pedoman_Gizi_Ibu_Hamil_chunks.json",
+        "document_count": 765
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S3\\24_PEDOMAN_PELAYANAN_ANTENATAL_TERPADU_Edisi_Ketiga_2020_chunks.json",
+        "document_count": 488
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S3\\25_PEDOMAN_PEMANTAUAN_PERTUMBUHAN_chunks.json",
+        "document_count": 4
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S3\\26_Pedoman_Pencegahan_Anemia_Ibu_Hamil_chunks.json",
+        "document_count": 224
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S3\\27_PEDOMAN_PENCEGAHAN_DAN_TATALAKSANA_GIZI_BURUK_PADA_BALITA_chunks.json",
+        "document_count": 7
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S3\\28_Pedoman_Tablet_Tambah_Darah_chunks.json",
+        "document_count": 162
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S3\\29_Pedoman-Pelaksanaan-Kelas-Ibu-Hamil_chunks.json",
+        "document_count": 182
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S3\\30_Pengenalan_Perubahan_Fisiologi_dan_Tanda_Bahaya_pada_Ibu_Hamil_dan_Ibu_Nifas_chunks.json",
+        "document_count": 1
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S3\\31_Penyelenggaraan_Upaya_Kesehatan_Reproduksi_chunks.json",
+        "document_count": 311
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S3\\32_PGS_Ibu_Hamil_dan_Ibu_Menyusui_-_Merge-1_chunks.json",
+        "document_count": 765
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S3\\33_Standar_antropometri_anak_chunks.json",
+        "document_count": 4
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S3\\34_Standar_Antropometri_dan_Deteksi_Dini_Perkembangan_Anak_chunks.json",
+        "document_count": 2
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S3\\35_Suplemen_Zat_Gizi_Mikro_Ibu_Hamil_chunks.json",
+        "document_count": 0
+      }
+    ]
+  },
+  "S4": {
+    "scenario": "S4",
+    "chunk_size": 500,
+    "overlap": 50,
+    "top_k": 3,
+    "input_dir": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S4",
+    "input_json_count": 35,
+    "chroma_path": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\vectorstore\\S4",
+    "document_count": 6067,
+    "files": [
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S4\\01_(revisi_2)_A5_Pedoman_Pelayanan_Antenatal,_Persalinan,_Nifas,_dan_BBL_di_Era_Adaptasi_Kebiasaan_Baru_chunks.json",
+        "document_count": 201
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S4\\02_05_Kebijakan_dan_Strategi_-_Pencegahan_dan_Penanggulangan_Kelainan_Bawaan_chunks.json",
+        "document_count": 290
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S4\\03_2021kepmenkes4631_chunks.json",
+        "document_count": 75
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S4\\04_587089-buku-ajar-kehamilan-8ad06edb_chunks.json",
+        "document_count": 902
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S4\\05_buku_KIA_khusus_bayi_kecil_chunks.json",
+        "document_count": 84
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S4\\06_Buku_Saku_Kehamilan_Sehat_(1)_chunks.json",
+        "document_count": 101
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S4\\07_Buku_Saku_Kehamilan_Sehat_chunks.json",
+        "document_count": 101
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S4\\08_Buku_Saku_Kesehatan_Reproduksi_Catin_chunks.json",
+        "document_count": 161
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S4\\09_Buku_Saku_Pemberian_Makan_Bayi_dan_Anak_(PMBA)_untuk_Kader_chunks.json",
+        "document_count": 102
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S4\\10_Buku_Saku_Pencegahan_Anemia_pada_Ibu_Hamil_dan_Remaja_Putri_chunks.json",
+        "document_count": 155
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S4\\11_Buku_Saku_Pencegahan_dan_Tata_Laksana_Gizi_Buruk_Pada_Balita_di_Layanan_Rawat_Jalan_Bagi_Tenaga_Kesehatan_chunks.json",
+        "document_count": 410
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S4\\12_Buku_KIA_2024_(1)_chunks.json",
+        "document_count": 438
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S4\\13_BukuPanduanMakananBergiziSeimbangdanPengukuranStatusGiziIbuHamil_chunks.json",
+        "document_count": 40
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S4\\14_ISBN_Buku_Saku_Kader_(1)_chunks.json",
+        "document_count": 145
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S4\\15_Kemenkes_RI_Juknis_Pemantauan_Praktik_MP-ASI_chunks.json",
+        "document_count": 407
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S4\\16_Kurikulum_dan_Modul_Pelatihan_Pencegahan_dan_Tata_Laksana_Gizi_Buruk_Pada_Balita_Buku_3_Tahun_2020_chunks.json",
+        "document_count": 8
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S4\\17_Modul_Orientasi_Kader_Posyandu_chunks.json",
+        "document_count": 303
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S4\\18_pdf-link-buku-pedoman-imunisasi-2024_chunks.json",
+        "document_count": 62
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S4\\19_Pedoman_Aktivitas_Fisik_dan_Senam_Hamil_chunks.json",
+        "document_count": 32
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S4\\20_Pedoman_Bagi_Ibu_Hamil,_Ibu_Nifas,_dan_Bayi_Baru_Lahir_Selama_Social_Distancing_chunks.json",
+        "document_count": 55
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S4\\21_Pedoman_Deteksi_Risiko_Tinggi_Kehamilan_chunks.json",
+        "document_count": 2
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S4\\22_Pedoman_Dukungan_Keluarga_chunks.json",
+        "document_count": 227
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S4\\23_Pedoman_Gizi_Ibu_Hamil_chunks.json",
+        "document_count": 462
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S4\\24_PEDOMAN_PELAYANAN_ANTENATAL_TERPADU_Edisi_Ketiga_2020_chunks.json",
+        "document_count": 303
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S4\\25_PEDOMAN_PEMANTAUAN_PERTUMBUHAN_chunks.json",
+        "document_count": 2
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S4\\26_Pedoman_Pencegahan_Anemia_Ibu_Hamil_chunks.json",
+        "document_count": 136
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S4\\27_PEDOMAN_PENCEGAHAN_DAN_TATALAKSANA_GIZI_BURUK_PADA_BALITA_chunks.json",
+        "document_count": 4
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S4\\28_Pedoman_Tablet_Tambah_Darah_chunks.json",
+        "document_count": 97
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S4\\29_Pedoman-Pelaksanaan-Kelas-Ibu-Hamil_chunks.json",
+        "document_count": 112
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S4\\30_Pengenalan_Perubahan_Fisiologi_dan_Tanda_Bahaya_pada_Ibu_Hamil_dan_Ibu_Nifas_chunks.json",
+        "document_count": 1
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S4\\31_Penyelenggaraan_Upaya_Kesehatan_Reproduksi_chunks.json",
+        "document_count": 183
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S4\\32_PGS_Ibu_Hamil_dan_Ibu_Menyusui_-_Merge-1_chunks.json",
+        "document_count": 462
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S4\\33_Standar_antropometri_anak_chunks.json",
+        "document_count": 3
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S4\\34_Standar_Antropometri_dan_Deteksi_Dini_Perkembangan_Anak_chunks.json",
+        "document_count": 1
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S4\\35_Suplemen_Zat_Gizi_Mikro_Ibu_Hamil_chunks.json",
+        "document_count": 0
+      }
+    ]
+  },
+  "S5": {
+    "scenario": "S5",
+    "chunk_size": 500,
+    "overlap": 50,
+    "top_k": 5,
+    "input_dir": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S5",
+    "input_json_count": 35,
+    "chroma_path": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\vectorstore\\S5",
+    "document_count": 6067,
+    "files": [
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S5\\01_(revisi_2)_A5_Pedoman_Pelayanan_Antenatal,_Persalinan,_Nifas,_dan_BBL_di_Era_Adaptasi_Kebiasaan_Baru_chunks.json",
+        "document_count": 201
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S5\\02_05_Kebijakan_dan_Strategi_-_Pencegahan_dan_Penanggulangan_Kelainan_Bawaan_chunks.json",
+        "document_count": 290
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S5\\03_2021kepmenkes4631_chunks.json",
+        "document_count": 75
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S5\\04_587089-buku-ajar-kehamilan-8ad06edb_chunks.json",
+        "document_count": 902
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S5\\05_buku_KIA_khusus_bayi_kecil_chunks.json",
+        "document_count": 84
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S5\\06_Buku_Saku_Kehamilan_Sehat_(1)_chunks.json",
+        "document_count": 101
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S5\\07_Buku_Saku_Kehamilan_Sehat_chunks.json",
+        "document_count": 101
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S5\\08_Buku_Saku_Kesehatan_Reproduksi_Catin_chunks.json",
+        "document_count": 161
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S5\\09_Buku_Saku_Pemberian_Makan_Bayi_dan_Anak_(PMBA)_untuk_Kader_chunks.json",
+        "document_count": 102
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S5\\10_Buku_Saku_Pencegahan_Anemia_pada_Ibu_Hamil_dan_Remaja_Putri_chunks.json",
+        "document_count": 155
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S5\\11_Buku_Saku_Pencegahan_dan_Tata_Laksana_Gizi_Buruk_Pada_Balita_di_Layanan_Rawat_Jalan_Bagi_Tenaga_Kesehatan_chunks.json",
+        "document_count": 410
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S5\\12_Buku_KIA_2024_(1)_chunks.json",
+        "document_count": 438
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S5\\13_BukuPanduanMakananBergiziSeimbangdanPengukuranStatusGiziIbuHamil_chunks.json",
+        "document_count": 40
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S5\\14_ISBN_Buku_Saku_Kader_(1)_chunks.json",
+        "document_count": 145
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S5\\15_Kemenkes_RI_Juknis_Pemantauan_Praktik_MP-ASI_chunks.json",
+        "document_count": 407
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S5\\16_Kurikulum_dan_Modul_Pelatihan_Pencegahan_dan_Tata_Laksana_Gizi_Buruk_Pada_Balita_Buku_3_Tahun_2020_chunks.json",
+        "document_count": 8
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S5\\17_Modul_Orientasi_Kader_Posyandu_chunks.json",
+        "document_count": 303
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S5\\18_pdf-link-buku-pedoman-imunisasi-2024_chunks.json",
+        "document_count": 62
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S5\\19_Pedoman_Aktivitas_Fisik_dan_Senam_Hamil_chunks.json",
+        "document_count": 32
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S5\\20_Pedoman_Bagi_Ibu_Hamil,_Ibu_Nifas,_dan_Bayi_Baru_Lahir_Selama_Social_Distancing_chunks.json",
+        "document_count": 55
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S5\\21_Pedoman_Deteksi_Risiko_Tinggi_Kehamilan_chunks.json",
+        "document_count": 2
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S5\\22_Pedoman_Dukungan_Keluarga_chunks.json",
+        "document_count": 227
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S5\\23_Pedoman_Gizi_Ibu_Hamil_chunks.json",
+        "document_count": 462
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S5\\24_PEDOMAN_PELAYANAN_ANTENATAL_TERPADU_Edisi_Ketiga_2020_chunks.json",
+        "document_count": 303
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S5\\25_PEDOMAN_PEMANTAUAN_PERTUMBUHAN_chunks.json",
+        "document_count": 2
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S5\\26_Pedoman_Pencegahan_Anemia_Ibu_Hamil_chunks.json",
+        "document_count": 136
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S5\\27_PEDOMAN_PENCEGAHAN_DAN_TATALAKSANA_GIZI_BURUK_PADA_BALITA_chunks.json",
+        "document_count": 4
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S5\\28_Pedoman_Tablet_Tambah_Darah_chunks.json",
+        "document_count": 97
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S5\\29_Pedoman-Pelaksanaan-Kelas-Ibu-Hamil_chunks.json",
+        "document_count": 112
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S5\\30_Pengenalan_Perubahan_Fisiologi_dan_Tanda_Bahaya_pada_Ibu_Hamil_dan_Ibu_Nifas_chunks.json",
+        "document_count": 1
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S5\\31_Penyelenggaraan_Upaya_Kesehatan_Reproduksi_chunks.json",
+        "document_count": 183
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S5\\32_PGS_Ibu_Hamil_dan_Ibu_Menyusui_-_Merge-1_chunks.json",
+        "document_count": 462
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S5\\33_Standar_antropometri_anak_chunks.json",
+        "document_count": 3
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S5\\34_Standar_Antropometri_dan_Deteksi_Dini_Perkembangan_Anak_chunks.json",
+        "document_count": 1
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S5\\35_Suplemen_Zat_Gizi_Mikro_Ibu_Hamil_chunks.json",
+        "document_count": 0
+      }
+    ]
+  },
+  "S6": {
+    "scenario": "S6",
+    "chunk_size": 500,
+    "overlap": 50,
+    "top_k": 7,
+    "input_dir": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S6",
+    "input_json_count": 35,
+    "chroma_path": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\vectorstore\\S6",
+    "document_count": 6067,
+    "files": [
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S6\\01_(revisi_2)_A5_Pedoman_Pelayanan_Antenatal,_Persalinan,_Nifas,_dan_BBL_di_Era_Adaptasi_Kebiasaan_Baru_chunks.json",
+        "document_count": 201
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S6\\02_05_Kebijakan_dan_Strategi_-_Pencegahan_dan_Penanggulangan_Kelainan_Bawaan_chunks.json",
+        "document_count": 290
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S6\\03_2021kepmenkes4631_chunks.json",
+        "document_count": 75
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S6\\04_587089-buku-ajar-kehamilan-8ad06edb_chunks.json",
+        "document_count": 902
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S6\\05_buku_KIA_khusus_bayi_kecil_chunks.json",
+        "document_count": 84
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S6\\06_Buku_Saku_Kehamilan_Sehat_(1)_chunks.json",
+        "document_count": 101
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S6\\07_Buku_Saku_Kehamilan_Sehat_chunks.json",
+        "document_count": 101
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S6\\08_Buku_Saku_Kesehatan_Reproduksi_Catin_chunks.json",
+        "document_count": 161
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S6\\09_Buku_Saku_Pemberian_Makan_Bayi_dan_Anak_(PMBA)_untuk_Kader_chunks.json",
+        "document_count": 102
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S6\\10_Buku_Saku_Pencegahan_Anemia_pada_Ibu_Hamil_dan_Remaja_Putri_chunks.json",
+        "document_count": 155
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S6\\11_Buku_Saku_Pencegahan_dan_Tata_Laksana_Gizi_Buruk_Pada_Balita_di_Layanan_Rawat_Jalan_Bagi_Tenaga_Kesehatan_chunks.json",
+        "document_count": 410
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S6\\12_Buku_KIA_2024_(1)_chunks.json",
+        "document_count": 438
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S6\\13_BukuPanduanMakananBergiziSeimbangdanPengukuranStatusGiziIbuHamil_chunks.json",
+        "document_count": 40
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S6\\14_ISBN_Buku_Saku_Kader_(1)_chunks.json",
+        "document_count": 145
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S6\\15_Kemenkes_RI_Juknis_Pemantauan_Praktik_MP-ASI_chunks.json",
+        "document_count": 407
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S6\\16_Kurikulum_dan_Modul_Pelatihan_Pencegahan_dan_Tata_Laksana_Gizi_Buruk_Pada_Balita_Buku_3_Tahun_2020_chunks.json",
+        "document_count": 8
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S6\\17_Modul_Orientasi_Kader_Posyandu_chunks.json",
+        "document_count": 303
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S6\\18_pdf-link-buku-pedoman-imunisasi-2024_chunks.json",
+        "document_count": 62
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S6\\19_Pedoman_Aktivitas_Fisik_dan_Senam_Hamil_chunks.json",
+        "document_count": 32
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S6\\20_Pedoman_Bagi_Ibu_Hamil,_Ibu_Nifas,_dan_Bayi_Baru_Lahir_Selama_Social_Distancing_chunks.json",
+        "document_count": 55
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S6\\21_Pedoman_Deteksi_Risiko_Tinggi_Kehamilan_chunks.json",
+        "document_count": 2
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S6\\22_Pedoman_Dukungan_Keluarga_chunks.json",
+        "document_count": 227
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S6\\23_Pedoman_Gizi_Ibu_Hamil_chunks.json",
+        "document_count": 462
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S6\\24_PEDOMAN_PELAYANAN_ANTENATAL_TERPADU_Edisi_Ketiga_2020_chunks.json",
+        "document_count": 303
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S6\\25_PEDOMAN_PEMANTAUAN_PERTUMBUHAN_chunks.json",
+        "document_count": 2
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S6\\26_Pedoman_Pencegahan_Anemia_Ibu_Hamil_chunks.json",
+        "document_count": 136
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S6\\27_PEDOMAN_PENCEGAHAN_DAN_TATALAKSANA_GIZI_BURUK_PADA_BALITA_chunks.json",
+        "document_count": 4
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S6\\28_Pedoman_Tablet_Tambah_Darah_chunks.json",
+        "document_count": 97
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S6\\29_Pedoman-Pelaksanaan-Kelas-Ibu-Hamil_chunks.json",
+        "document_count": 112
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S6\\30_Pengenalan_Perubahan_Fisiologi_dan_Tanda_Bahaya_pada_Ibu_Hamil_dan_Ibu_Nifas_chunks.json",
+        "document_count": 1
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S6\\31_Penyelenggaraan_Upaya_Kesehatan_Reproduksi_chunks.json",
+        "document_count": 183
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S6\\32_PGS_Ibu_Hamil_dan_Ibu_Menyusui_-_Merge-1_chunks.json",
+        "document_count": 462
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S6\\33_Standar_antropometri_anak_chunks.json",
+        "document_count": 3
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S6\\34_Standar_Antropometri_dan_Deteksi_Dini_Perkembangan_Anak_chunks.json",
+        "document_count": 1
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S6\\35_Suplemen_Zat_Gizi_Mikro_Ibu_Hamil_chunks.json",
+        "document_count": 0
+      }
+    ]
+  },
+  "S7": {
+    "scenario": "S7",
+    "chunk_size": 700,
+    "overlap": 50,
+    "top_k": 3,
+    "input_dir": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S7",
+    "input_json_count": 35,
+    "chroma_path": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\vectorstore\\S7",
+    "document_count": 4427,
+    "files": [
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S7\\01_(revisi_2)_A5_Pedoman_Pelayanan_Antenatal,_Persalinan,_Nifas,_dan_BBL_di_Era_Adaptasi_Kebiasaan_Baru_chunks.json",
+        "document_count": 144
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S7\\02_05_Kebijakan_dan_Strategi_-_Pencegahan_dan_Penanggulangan_Kelainan_Bawaan_chunks.json",
+        "document_count": 208
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S7\\03_2021kepmenkes4631_chunks.json",
+        "document_count": 53
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S7\\04_587089-buku-ajar-kehamilan-8ad06edb_chunks.json",
+        "document_count": 640
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S7\\05_buku_KIA_khusus_bayi_kecil_chunks.json",
+        "document_count": 60
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S7\\06_Buku_Saku_Kehamilan_Sehat_(1)_chunks.json",
+        "document_count": 73
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S7\\07_Buku_Saku_Kehamilan_Sehat_chunks.json",
+        "document_count": 73
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S7\\08_Buku_Saku_Kesehatan_Reproduksi_Catin_chunks.json",
+        "document_count": 117
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S7\\09_Buku_Saku_Pemberian_Makan_Bayi_dan_Anak_(PMBA)_untuk_Kader_chunks.json",
+        "document_count": 81
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S7\\10_Buku_Saku_Pencegahan_Anemia_pada_Ibu_Hamil_dan_Remaja_Putri_chunks.json",
+        "document_count": 107
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S7\\11_Buku_Saku_Pencegahan_dan_Tata_Laksana_Gizi_Buruk_Pada_Balita_di_Layanan_Rawat_Jalan_Bagi_Tenaga_Kesehatan_chunks.json",
+        "document_count": 300
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S7\\12_Buku_KIA_2024_(1)_chunks.json",
+        "document_count": 326
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S7\\13_BukuPanduanMakananBergiziSeimbangdanPengukuranStatusGiziIbuHamil_chunks.json",
+        "document_count": 30
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S7\\14_ISBN_Buku_Saku_Kader_(1)_chunks.json",
+        "document_count": 106
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S7\\15_Kemenkes_RI_Juknis_Pemantauan_Praktik_MP-ASI_chunks.json",
+        "document_count": 302
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S7\\16_Kurikulum_dan_Modul_Pelatihan_Pencegahan_dan_Tata_Laksana_Gizi_Buruk_Pada_Balita_Buku_3_Tahun_2020_chunks.json",
+        "document_count": 6
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S7\\17_Modul_Orientasi_Kader_Posyandu_chunks.json",
+        "document_count": 209
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S7\\18_pdf-link-buku-pedoman-imunisasi-2024_chunks.json",
+        "document_count": 48
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S7\\19_Pedoman_Aktivitas_Fisik_dan_Senam_Hamil_chunks.json",
+        "document_count": 23
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S7\\20_Pedoman_Bagi_Ibu_Hamil,_Ibu_Nifas,_dan_Bayi_Baru_Lahir_Selama_Social_Distancing_chunks.json",
+        "document_count": 40
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S7\\21_Pedoman_Deteksi_Risiko_Tinggi_Kehamilan_chunks.json",
+        "document_count": 1
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S7\\22_Pedoman_Dukungan_Keluarga_chunks.json",
+        "document_count": 167
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S7\\23_Pedoman_Gizi_Ibu_Hamil_chunks.json",
+        "document_count": 344
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S7\\24_PEDOMAN_PELAYANAN_ANTENATAL_TERPADU_Edisi_Ketiga_2020_chunks.json",
+        "document_count": 225
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S7\\25_PEDOMAN_PEMANTAUAN_PERTUMBUHAN_chunks.json",
+        "document_count": 2
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S7\\26_Pedoman_Pencegahan_Anemia_Ibu_Hamil_chunks.json",
+        "document_count": 97
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S7\\27_PEDOMAN_PENCEGAHAN_DAN_TATALAKSANA_GIZI_BURUK_PADA_BALITA_chunks.json",
+        "document_count": 3
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S7\\28_Pedoman_Tablet_Tambah_Darah_chunks.json",
+        "document_count": 72
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S7\\29_Pedoman-Pelaksanaan-Kelas-Ibu-Hamil_chunks.json",
+        "document_count": 86
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S7\\30_Pengenalan_Perubahan_Fisiologi_dan_Tanda_Bahaya_pada_Ibu_Hamil_dan_Ibu_Nifas_chunks.json",
+        "document_count": 1
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S7\\31_Penyelenggaraan_Upaya_Kesehatan_Reproduksi_chunks.json",
+        "document_count": 136
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S7\\32_PGS_Ibu_Hamil_dan_Ibu_Menyusui_-_Merge-1_chunks.json",
+        "document_count": 344
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S7\\33_Standar_antropometri_anak_chunks.json",
+        "document_count": 2
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S7\\34_Standar_Antropometri_dan_Deteksi_Dini_Perkembangan_Anak_chunks.json",
+        "document_count": 1
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S7\\35_Suplemen_Zat_Gizi_Mikro_Ibu_Hamil_chunks.json",
+        "document_count": 0
+      }
+    ]
+  },
+  "S8": {
+    "scenario": "S8",
+    "chunk_size": 700,
+    "overlap": 50,
+    "top_k": 5,
+    "input_dir": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S8",
+    "input_json_count": 35,
+    "chroma_path": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\vectorstore\\S8",
+    "document_count": 4427,
+    "files": [
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S8\\01_(revisi_2)_A5_Pedoman_Pelayanan_Antenatal,_Persalinan,_Nifas,_dan_BBL_di_Era_Adaptasi_Kebiasaan_Baru_chunks.json",
+        "document_count": 144
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S8\\02_05_Kebijakan_dan_Strategi_-_Pencegahan_dan_Penanggulangan_Kelainan_Bawaan_chunks.json",
+        "document_count": 208
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S8\\03_2021kepmenkes4631_chunks.json",
+        "document_count": 53
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S8\\04_587089-buku-ajar-kehamilan-8ad06edb_chunks.json",
+        "document_count": 640
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S8\\05_buku_KIA_khusus_bayi_kecil_chunks.json",
+        "document_count": 60
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S8\\06_Buku_Saku_Kehamilan_Sehat_(1)_chunks.json",
+        "document_count": 73
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S8\\07_Buku_Saku_Kehamilan_Sehat_chunks.json",
+        "document_count": 73
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S8\\08_Buku_Saku_Kesehatan_Reproduksi_Catin_chunks.json",
+        "document_count": 117
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S8\\09_Buku_Saku_Pemberian_Makan_Bayi_dan_Anak_(PMBA)_untuk_Kader_chunks.json",
+        "document_count": 81
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S8\\10_Buku_Saku_Pencegahan_Anemia_pada_Ibu_Hamil_dan_Remaja_Putri_chunks.json",
+        "document_count": 107
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S8\\11_Buku_Saku_Pencegahan_dan_Tata_Laksana_Gizi_Buruk_Pada_Balita_di_Layanan_Rawat_Jalan_Bagi_Tenaga_Kesehatan_chunks.json",
+        "document_count": 300
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S8\\12_Buku_KIA_2024_(1)_chunks.json",
+        "document_count": 326
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S8\\13_BukuPanduanMakananBergiziSeimbangdanPengukuranStatusGiziIbuHamil_chunks.json",
+        "document_count": 30
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S8\\14_ISBN_Buku_Saku_Kader_(1)_chunks.json",
+        "document_count": 106
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S8\\15_Kemenkes_RI_Juknis_Pemantauan_Praktik_MP-ASI_chunks.json",
+        "document_count": 302
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S8\\16_Kurikulum_dan_Modul_Pelatihan_Pencegahan_dan_Tata_Laksana_Gizi_Buruk_Pada_Balita_Buku_3_Tahun_2020_chunks.json",
+        "document_count": 6
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S8\\17_Modul_Orientasi_Kader_Posyandu_chunks.json",
+        "document_count": 209
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S8\\18_pdf-link-buku-pedoman-imunisasi-2024_chunks.json",
+        "document_count": 48
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S8\\19_Pedoman_Aktivitas_Fisik_dan_Senam_Hamil_chunks.json",
+        "document_count": 23
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S8\\20_Pedoman_Bagi_Ibu_Hamil,_Ibu_Nifas,_dan_Bayi_Baru_Lahir_Selama_Social_Distancing_chunks.json",
+        "document_count": 40
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S8\\21_Pedoman_Deteksi_Risiko_Tinggi_Kehamilan_chunks.json",
+        "document_count": 1
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S8\\22_Pedoman_Dukungan_Keluarga_chunks.json",
+        "document_count": 167
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S8\\23_Pedoman_Gizi_Ibu_Hamil_chunks.json",
+        "document_count": 344
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S8\\24_PEDOMAN_PELAYANAN_ANTENATAL_TERPADU_Edisi_Ketiga_2020_chunks.json",
+        "document_count": 225
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S8\\25_PEDOMAN_PEMANTAUAN_PERTUMBUHAN_chunks.json",
+        "document_count": 2
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S8\\26_Pedoman_Pencegahan_Anemia_Ibu_Hamil_chunks.json",
+        "document_count": 97
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S8\\27_PEDOMAN_PENCEGAHAN_DAN_TATALAKSANA_GIZI_BURUK_PADA_BALITA_chunks.json",
+        "document_count": 3
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S8\\28_Pedoman_Tablet_Tambah_Darah_chunks.json",
+        "document_count": 72
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S8\\29_Pedoman-Pelaksanaan-Kelas-Ibu-Hamil_chunks.json",
+        "document_count": 86
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S8\\30_Pengenalan_Perubahan_Fisiologi_dan_Tanda_Bahaya_pada_Ibu_Hamil_dan_Ibu_Nifas_chunks.json",
+        "document_count": 1
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S8\\31_Penyelenggaraan_Upaya_Kesehatan_Reproduksi_chunks.json",
+        "document_count": 136
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S8\\32_PGS_Ibu_Hamil_dan_Ibu_Menyusui_-_Merge-1_chunks.json",
+        "document_count": 344
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S8\\33_Standar_antropometri_anak_chunks.json",
+        "document_count": 2
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S8\\34_Standar_Antropometri_dan_Deteksi_Dini_Perkembangan_Anak_chunks.json",
+        "document_count": 1
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S8\\35_Suplemen_Zat_Gizi_Mikro_Ibu_Hamil_chunks.json",
+        "document_count": 0
+      }
+    ]
+  },
+  "S9": {
+    "scenario": "S9",
+    "chunk_size": 700,
+    "overlap": 50,
+    "top_k": 7,
+    "input_dir": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S9",
+    "input_json_count": 35,
+    "chroma_path": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\vectorstore\\S9",
+    "document_count": 4427,
+    "files": [
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S9\\01_(revisi_2)_A5_Pedoman_Pelayanan_Antenatal,_Persalinan,_Nifas,_dan_BBL_di_Era_Adaptasi_Kebiasaan_Baru_chunks.json",
+        "document_count": 144
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S9\\02_05_Kebijakan_dan_Strategi_-_Pencegahan_dan_Penanggulangan_Kelainan_Bawaan_chunks.json",
+        "document_count": 208
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S9\\03_2021kepmenkes4631_chunks.json",
+        "document_count": 53
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S9\\04_587089-buku-ajar-kehamilan-8ad06edb_chunks.json",
+        "document_count": 640
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S9\\05_buku_KIA_khusus_bayi_kecil_chunks.json",
+        "document_count": 60
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S9\\06_Buku_Saku_Kehamilan_Sehat_(1)_chunks.json",
+        "document_count": 73
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S9\\07_Buku_Saku_Kehamilan_Sehat_chunks.json",
+        "document_count": 73
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S9\\08_Buku_Saku_Kesehatan_Reproduksi_Catin_chunks.json",
+        "document_count": 117
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S9\\09_Buku_Saku_Pemberian_Makan_Bayi_dan_Anak_(PMBA)_untuk_Kader_chunks.json",
+        "document_count": 81
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S9\\10_Buku_Saku_Pencegahan_Anemia_pada_Ibu_Hamil_dan_Remaja_Putri_chunks.json",
+        "document_count": 107
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S9\\11_Buku_Saku_Pencegahan_dan_Tata_Laksana_Gizi_Buruk_Pada_Balita_di_Layanan_Rawat_Jalan_Bagi_Tenaga_Kesehatan_chunks.json",
+        "document_count": 300
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S9\\12_Buku_KIA_2024_(1)_chunks.json",
+        "document_count": 326
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S9\\13_BukuPanduanMakananBergiziSeimbangdanPengukuranStatusGiziIbuHamil_chunks.json",
+        "document_count": 30
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S9\\14_ISBN_Buku_Saku_Kader_(1)_chunks.json",
+        "document_count": 106
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S9\\15_Kemenkes_RI_Juknis_Pemantauan_Praktik_MP-ASI_chunks.json",
+        "document_count": 302
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S9\\16_Kurikulum_dan_Modul_Pelatihan_Pencegahan_dan_Tata_Laksana_Gizi_Buruk_Pada_Balita_Buku_3_Tahun_2020_chunks.json",
+        "document_count": 6
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S9\\17_Modul_Orientasi_Kader_Posyandu_chunks.json",
+        "document_count": 209
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S9\\18_pdf-link-buku-pedoman-imunisasi-2024_chunks.json",
+        "document_count": 48
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S9\\19_Pedoman_Aktivitas_Fisik_dan_Senam_Hamil_chunks.json",
+        "document_count": 23
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S9\\20_Pedoman_Bagi_Ibu_Hamil,_Ibu_Nifas,_dan_Bayi_Baru_Lahir_Selama_Social_Distancing_chunks.json",
+        "document_count": 40
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S9\\21_Pedoman_Deteksi_Risiko_Tinggi_Kehamilan_chunks.json",
+        "document_count": 1
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S9\\22_Pedoman_Dukungan_Keluarga_chunks.json",
+        "document_count": 167
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S9\\23_Pedoman_Gizi_Ibu_Hamil_chunks.json",
+        "document_count": 344
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S9\\24_PEDOMAN_PELAYANAN_ANTENATAL_TERPADU_Edisi_Ketiga_2020_chunks.json",
+        "document_count": 225
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S9\\25_PEDOMAN_PEMANTAUAN_PERTUMBUHAN_chunks.json",
+        "document_count": 2
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S9\\26_Pedoman_Pencegahan_Anemia_Ibu_Hamil_chunks.json",
+        "document_count": 97
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S9\\27_PEDOMAN_PENCEGAHAN_DAN_TATALAKSANA_GIZI_BURUK_PADA_BALITA_chunks.json",
+        "document_count": 3
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S9\\28_Pedoman_Tablet_Tambah_Darah_chunks.json",
+        "document_count": 72
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S9\\29_Pedoman-Pelaksanaan-Kelas-Ibu-Hamil_chunks.json",
+        "document_count": 86
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S9\\30_Pengenalan_Perubahan_Fisiologi_dan_Tanda_Bahaya_pada_Ibu_Hamil_dan_Ibu_Nifas_chunks.json",
+        "document_count": 1
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S9\\31_Penyelenggaraan_Upaya_Kesehatan_Reproduksi_chunks.json",
+        "document_count": 136
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S9\\32_PGS_Ibu_Hamil_dan_Ibu_Menyusui_-_Merge-1_chunks.json",
+        "document_count": 344
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S9\\33_Standar_antropometri_anak_chunks.json",
+        "document_count": 2
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S9\\34_Standar_Antropometri_dan_Deteksi_Dini_Perkembangan_Anak_chunks.json",
+        "document_count": 1
+      },
+      {
+        "file": "D:\\test_chatbot_rag\\test_chatbot\\test_chatbot\\data\\chunks\\S9\\35_Suplemen_Zat_Gizi_Mikro_Ibu_Hamil_chunks.json",
+        "document_count": 0
+      }
+    ]
+  }
+}
