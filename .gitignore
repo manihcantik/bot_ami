@@ -10,6 +10,7 @@ __pycache__/
 
 # ChromaDB
 chroma_db/
+vectorstore/
 
 # VS Code
 .vscode/
@@ -19,3 +20,8 @@ chroma_db/
 
 # Model embedding
 bge-m3/
+models/bge-m3/
+
+# Generated data and results
+data/chunks/
+results/

@@ -1,0 +1,10 @@
+chromadb
+sentence-transformers
+PyMuPDF
+requests
+pandas
+openai
+ragas==0.4.3
+datasets
+langchain-community
+instructor
